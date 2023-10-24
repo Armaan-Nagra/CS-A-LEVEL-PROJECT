@@ -18,14 +18,12 @@ player1 = player(0,1500,1)
 gun = weapon("uzi",100,150)
 grenade = weapon("grenade",5,500)
 
-animation_steps = 3
 animation_list = []
-
-animation_list.append(shooting_soldier)
+#animation_list.append(shooting_soldier)
 animation_list.append(run1)
 animation_list.append(run2)
 
-testing_enemy = enemy(100,300,100,animation_list,2,1,5)
+testing_enemy = enemy(100,300,100,animation_list,2,True,2,75)
 
 #soldiers = pygame.sprite.Group()
 #soldiers.add(testing_enemy)
@@ -77,7 +75,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
         gameDisplay.fill(white)
         
         scroll_background(gameDisplay)
-        
+        testing_enemy.draw(gameDisplay)
         #display information about the player
         player1.health_bar(gameDisplay)
         gun.display_HUD(uzi,gameDisplay,750,800,775,925)
@@ -89,7 +87,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
         gun.draw_hitbox(gameDisplay,black)
 
         
-        testing_enemy.draw(gameDisplay)
+        
         
   
     pygame.display.update()# this line updates the display so that when a change happens in the loop it is displayed.
