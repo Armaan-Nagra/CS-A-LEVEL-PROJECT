@@ -6,6 +6,7 @@ from button import *
 import json
 from weapon import *
 from player import *
+from enemy import *
 
 soldier_group = pygame.sprite.Group()
 tank_group = pygame.sprite.Group()
@@ -16,6 +17,18 @@ width, height, gameDisplay, clock = initialise_pygame_display()
 player1 = player(0,1500,1)
 gun = weapon("uzi",100,150)
 grenade = weapon("grenade",5,500)
+
+animation_steps = 3
+animation_list = []
+
+animation_list.append(shooting_soldier)
+animation_list.append(run1)
+animation_list.append(run2)
+
+testing_enemy = enemy(100,300,100,animation_list,2,1,5)
+
+#soldiers = pygame.sprite.Group()
+#soldiers.add(testing_enemy)
 
 gamestate = "start"
 while gamestate != "end": #loops until the user wants to exit the game.
@@ -55,12 +68,10 @@ while gamestate != "end": #loops until the user wants to exit the game.
         
 
     elif gamestate == "play":
-        #enemies = pygame.sprite.Group()
-        #enemy1 = enemy(0,0)
-        #for x in range(40):
-            
-            #enemies.add()
+
         background_music.stop()
+
+        
 
         #display the background
         gameDisplay.fill(white)
@@ -78,7 +89,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
         gun.draw_hitbox(gameDisplay,black)
 
         
-        
+        testing_enemy.draw(gameDisplay)
         
   
     pygame.display.update()# this line updates the display so that when a change happens in the loop it is displayed.
