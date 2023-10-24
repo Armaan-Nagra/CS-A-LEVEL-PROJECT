@@ -22,6 +22,7 @@ animation_list = []
 #animation_list.append(shooting_soldier)
 animation_list.append(run1)
 animation_list.append(run2)
+animation_list.append(shooting_soldier)
 
 testing_enemy = enemy(100,300,100,animation_list,2,True,2,75)
 
@@ -75,7 +76,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
         gameDisplay.fill(white)
         
         scroll_background(gameDisplay)
-        testing_enemy.draw(gameDisplay)
+        testing_enemy.update(gameDisplay)
         #display information about the player
         player1.health_bar(gameDisplay)
         gun.display_HUD(uzi,gameDisplay,750,800,775,925)

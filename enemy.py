@@ -18,18 +18,32 @@ class enemy(pygame.sprite.Sprite):
         self.cooldown = gcooldown
 
 
-    def draw(self,gd):
+    def move(self,gd):
         current_time = pygame.time.get_ticks()
         if current_time - self.last_time >= self.cooldown:
             self.frame += 1
             self.last_time = current_time
             if self.frame >= 2:
                 self.frame = 0
-        self.x += self.speed
-
-
-        
+        self.x += self.speed    
         gd.blit(pygame.transform.flip(self.spritesheet[self.frame],self.direction,False),(self.x,self.y))
+
+    def shoot(self,gd):
+        current_time = pygame.time.get_ticks()
+        if current_time - self.last_time >= self.cooldown:
+            self.last_time = current_time
+            gd.blit(white_shoot,(self.x,self.y))
+        else:
+            gd.blit(self.spritesheet[2],(self.x,self.y))
+
+    
+    def update(self,gd):
+        if self.x <=500:
+            self.move(gd)
+        else:
+            self.shoot(gd)
+            
+            
 
         
     
