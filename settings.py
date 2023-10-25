@@ -43,7 +43,7 @@ bullets = 100
 #uzi
 uzi = pygame.image.load('Stages/Stage 5/photos/uzi-new.png')
 gunshot_sound = pygame.mixer.Sound("Stages/Stage 5/sounds/uzi-new.mp3")
-gunshot_visual = pygame.image.load('Stages/Stage 5/photos/INGAME/temp.png')
+black_cross = pygame.image.load('Stages/Stage 5/photos/INGAME/black_cross.png')
 
 #grenade
 grenade_image = pygame.image.load('Stages/Stage 5/photos/grenade-new.png')
@@ -61,7 +61,7 @@ background_x = 0
 shooting_soldier = pygame.image.load('Stages/Stage 5/photos/INGAME/shooter.png')
 run1 = pygame.image.load('Stages/Stage 5/photos/INGAME/run1.png')
 run2 = pygame.image.load('Stages/Stage 5/photos/INGAME/run2.png')
-white_shoot = pygame.image.load('Stages/Stage 5/photos/INGAME/soldier_shoot_white.png')
+white_shoot = pygame.image.load('Stages/Stage 5/photos/INGAME/white shoot.png')
 #load spritesheet
 soldier_spritesheet = pygame.image.load("Stages/Stage 5/photos/INGAME/invSpritesheet.png")
 

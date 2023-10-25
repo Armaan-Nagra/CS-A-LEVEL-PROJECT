@@ -19,27 +19,26 @@ gun = weapon("uzi",100,150)
 grenade = weapon("grenade",5,500)
 
 animation_list = []
-#animation_list.append(shooting_soldier)
 animation_list.append(run1)
 animation_list.append(run2)
 animation_list.append(shooting_soldier)
+animation_list.append(white_shoot)
 
-testing_enemy = enemy(100,300,100,animation_list,2,True,2,75)
+testing_enemy = enemy(-100,300,100,animation_list,2,True,2,75)
 
-#soldiers = pygame.sprite.Group()
-#soldiers.add(testing_enemy)
+soldiers = pygame.sprite.Group()
+soldiers.add(testing_enemy)
 
 gamestate = "start"
 while gamestate != "end": #loops until the user wants to exit the game.
     events = get_events() #the variable events contains the dictionary of events returned by get_events()z
     if events["quit"] == 1 or events["esc"] == 1: # if user presses the x on the top right of display or presses esc key
         gamestate = "end" #the gamestate is equal to "end" and the loop stops and the user leaves
-        
     elif gamestate == "start": 
         play_music(background_music) #play_music function is called which creates the background music 
         draw_cover(main_background) #this function draws the cover of the game onto the screen
-        gamestate = can_proceed(events) # this function returns whether the display should proceed onto the next screen by listening for space key
-        
+        gamestate = can_proceed(events) # this function returns whether the display should proceed onto the next screen by listening for space key    
+
     elif gamestate == "name":
         #global name
         draw_messages_and_title(gameDisplay)
@@ -47,6 +46,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
         display_text(black,50,715,"Enter Name:",base_font)
         b = button(300,850,100,350,gameDisplay,dark_green,"name", "menu", "SUBMIT", 90, white, events)
         gamestate = b.name(name)
+
 
     elif gamestate == "menu":
         display_menu_texts() # displays title and exit game writing
@@ -76,20 +76,20 @@ while gamestate != "end": #loops until the user wants to exit the game.
         gameDisplay.fill(white)
         
         scroll_background(gameDisplay)
-        testing_enemy.update(gameDisplay)
+        soldiers.update(gameDisplay)
         #display information about the player
         player1.health_bar(gameDisplay)
         gun.display_HUD(uzi,gameDisplay,750,800,775,925)
         grenade.display_HUD(grenade_image,gameDisplay,875,800,915,925)
 
         #weapon effects
-        gun.shoot_effects(events["left-click"],gunshot_sound, gunshot_visual,gameDisplay,events["x"],events["y"])
+        gun.shoot_effects(events["left-click"],gunshot_sound, black_cross,gameDisplay,events["x"],events["y"])
         grenade.shoot_effects(events["right-click"],grenade_sound, grenade_visual, gameDisplay,events["x"],events["y"])
         gun.draw_hitbox(gameDisplay,black)
 
         
         
-        
+         
   
     pygame.display.update()# this line updates the display so that when a change happens in the loop it is displayed.
     clock.tick(120)

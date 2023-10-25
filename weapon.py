@@ -28,7 +28,7 @@ class weapon():
             now = pygame.time.get_ticks()
             if now - self.last_shot >= self.shot_delay:
                 sound.play()
-                gd.blit(visual,(self.x,self.y))
+                gd.blit(visual,(self.x -25,self.y-25))
                 self.bullets -= 1
                 
                 self.last_shot = pygame.time.get_ticks()
