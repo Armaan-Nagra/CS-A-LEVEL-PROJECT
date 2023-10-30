@@ -7,6 +7,7 @@ import json
 from weapon import *
 from player import *
 from enemy import *
+import random
 
 soldier_group = pygame.sprite.Group()
 tank_group = pygame.sprite.Group()
@@ -23,8 +24,8 @@ animation_list.append(run1)
 animation_list.append(run2)
 animation_list.append(shooting_soldier)
 animation_list.append(white_shoot)
-
-testing_enemy = enemy(-100,300,100,animation_list,2,True,2,75)
+#how do I spawn in enemies at different times
+testing_enemy = enemy(0,300,100,animation_list,random.randint(2,2),True,2,75)
 
 soldiers = pygame.sprite.Group()
 soldiers.add(testing_enemy)
