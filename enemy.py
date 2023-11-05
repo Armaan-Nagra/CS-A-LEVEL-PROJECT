@@ -2,8 +2,9 @@ import pygame
 from settings import *
 import random
 
+
 class enemy(pygame.sprite.Sprite):
-    def __init__(self,gx,gy,ghealth,gspritesheet,gstops,gdirection,gspeed,gcooldown):
+    def __init__(self,gx,gy,ghealth,gspritesheet,gstops,gdirection,gspeed,gcooldown,gplayer):
         pygame.sprite.Sprite.__init__(self)
         self.frame = 0
         self.x = gx
@@ -23,6 +24,7 @@ class enemy(pygame.sprite.Sprite):
             self.speed = gspeed * -1
         self.stop1_time = None
         self.stop2_time = None        
+        self.player = gplayer
 
     def move(self,gd):
         current_time = pygame.time.get_ticks()
@@ -43,6 +45,7 @@ class enemy(pygame.sprite.Sprite):
         if current_time - self.last_time >= self.cooldown:
             self.last_time = current_time
             gd.blit(self.spritesheet[3],(self.x,self.y))
+            self.player.change_health(-0.1)
 
         else:
             gd.blit(self.spritesheet[2],(self.x,self.y))

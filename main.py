@@ -15,7 +15,7 @@ tank_group = pygame.sprite.Group()
 
 width, height, gameDisplay, clock = initialise_pygame_display()
 
-player1 = player(0,1500,1)
+player1 = player(0,1500,100)
 gun = weapon("uzi",100,150)
 grenade = weapon("grenade",5,500)
 
@@ -25,7 +25,7 @@ animation_list.append(run2)
 animation_list.append(shooting_soldier)
 animation_list.append(white_shoot)
 #how do I spawn in enemies at different times
-testing_enemy = enemy(0,300,100,animation_list,random.randint(1,1),True,2,75)
+testing_enemy = enemy(0,300,100,animation_list,random.randint(1,1),True,2,75,player1)
 
 soldiers = pygame.sprite.Group()
 soldiers.add(testing_enemy)
