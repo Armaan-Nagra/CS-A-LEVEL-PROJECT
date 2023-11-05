@@ -18,7 +18,7 @@ class enemy(pygame.sprite.Sprite):
         self.cooldown = gcooldown
         self.stop1 = None
         self.stop2 = None
-        if self.direction:
+        if self.direction == 1:
             self.speed = gspeed
         else:
             self.speed = gspeed * -1
@@ -34,8 +34,8 @@ class enemy(pygame.sprite.Sprite):
             if self.frame >= 2:
                 self.frame = 0
         self.x += self.speed 
-        if self.direction:
-            gd.blit(pygame.transform.flip(self.spritesheet[self.frame],self.direction,False),(self.x,self.y))
+        if self.direction == 1:
+            gd.blit(pygame.transform.flip(self.spritesheet[self.frame],True ,False),(self.x,self.y))
         else:
             gd.blit(pygame.transform.flip(self.spritesheet[self.frame],False,False),(self.x,self.y))
 
@@ -45,7 +45,7 @@ class enemy(pygame.sprite.Sprite):
         if current_time - self.last_time >= self.cooldown:
             self.last_time = current_time
             gd.blit(self.spritesheet[3],(self.x,self.y))
-            self.player.change_health(-0.1)
+            self.player.change_health(-0.5)
 
         else:
             gd.blit(self.spritesheet[2],(self.x,self.y))
@@ -61,6 +61,8 @@ class enemy(pygame.sprite.Sprite):
             self.stop2 = random.randint(400,800)
             self.stops = 0
         self.stop_move(gd)
+        self.spawn_back()
+
         
 
     def stop_move(self,gd):
@@ -102,3 +104,14 @@ class enemy(pygame.sprite.Sprite):
 
         
     
+    def spawn_back(self):
+        if self.direction == 1 and self.x>= 1000:
+            self.x = random.randint(-500,0)
+            self.stops = random.randint(1,2)
+            self.stop1_time = None
+            self.stop2_time = None 
+        if self.direction == 0 and self.x<= 0:
+            self.x = random.randint(1000,1500)
+            self.stops = random.randint(1,2)
+            self.stop1_time = None
+            self.stop2_time = None 

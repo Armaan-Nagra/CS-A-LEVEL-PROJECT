@@ -1,3 +1,6 @@
 TO DO:
--Implement a way in which enemies shoots the player and does damage
--
+-when enemy stops, it stands "still"
+-Implement the HUD which shows amount of enemies left
+-Check that the enemy dies when you shoot it
+-implement tank 
+-implement increasing difficulty

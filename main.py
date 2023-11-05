@@ -24,11 +24,19 @@ animation_list.append(run1)
 animation_list.append(run2)
 animation_list.append(shooting_soldier)
 animation_list.append(white_shoot)
-#how do I spawn in enemies at different times
-testing_enemy = enemy(0,300,100,animation_list,random.randint(1,1),True,2,75,player1)
+
 
 soldiers = pygame.sprite.Group()
-soldiers.add(testing_enemy)
+
+for x in range(40):  
+    direction = random.getrandbits(1)
+    if direction == 1:
+        enemy_soldier = enemy(random.randint(-15000,0),random.randint(250,600),100,animation_list,random.randint(1,2),direction,2,75,player1)
+    else:
+        enemy_soldier = enemy(random.randint(1000,15000),random.randint(250,600),100,animation_list,random.randint(1,2),direction,2,75,player1)
+    soldiers.add(enemy_soldier)
+
+
 
 gamestate = "start"
 while gamestate != "end": #loops until the user wants to exit the game.
