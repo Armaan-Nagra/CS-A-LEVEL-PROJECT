@@ -25,7 +25,7 @@ animation_list.append(run2)
 animation_list.append(shooting_soldier)
 animation_list.append(white_shoot)
 #how do I spawn in enemies at different times
-testing_enemy = enemy(0,300,100,animation_list,random.randint(2,2),True,2,75)
+testing_enemy = enemy(0,300,100,animation_list,random.randint(1,1),True,2,75)
 
 soldiers = pygame.sprite.Group()
 soldiers.add(testing_enemy)

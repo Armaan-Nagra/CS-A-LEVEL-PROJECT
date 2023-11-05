@@ -21,6 +21,8 @@ class enemy(pygame.sprite.Sprite):
             self.speed = gspeed
         else:
             self.speed = gspeed * -1
+        self.stop1_time = None
+        self.stop2_time = None        
 
     def move(self,gd):
         current_time = pygame.time.get_ticks()
@@ -41,8 +43,10 @@ class enemy(pygame.sprite.Sprite):
         if current_time - self.last_time >= self.cooldown:
             self.last_time = current_time
             gd.blit(self.spritesheet[3],(self.x,self.y))
+
         else:
             gd.blit(self.spritesheet[2],(self.x,self.y))
+
  
     
     def update(self,gd):
@@ -54,33 +58,40 @@ class enemy(pygame.sprite.Sprite):
             self.stop2 = random.randint(400,800)
             self.stops = 0
         self.stop_move(gd)
+        
 
     def stop_move(self,gd):
-        if self.stop2 == None:
-            if ((self.stop1 - 1) <= self.x <= (self.stop1 + 1)):
-                stop_time = pygame.time.get_ticks()
-                if stop_time <= 5000: 
+        if self.stop2 == None: #if enemy stops once
+            if ((self.stop1 - 1) <= self.x and self.x <= (self.stop1 + 1)):
+                if self.stop1_time is None:
+                    self.stop1_time = pygame.time.get_ticks()  
+                elapsed_time = pygame.time.get_ticks() - self.stop1_time
+                if elapsed_time <= 2500:  
                     self.shoot(gd)
                 else:
                     self.move(gd)
-                print(stop_time)
             else:
                 self.move(gd)
-        if self.stop2 != None:
-            if ((self.stop1 - 1) <= self.x <= (self.stop1 + 1)):
-                stop1_time = pygame.time.get_ticks()
-                print(stop1_time)
-                if stop1_time <= 5000: 
+            
+        if self.stop2 != None: #if enemy stops twice
+            if ((self.stop1 - 1) <= self.x and self.x <= (self.stop1 + 1)):
+                if self.stop1_time is None:
+                    self.stop1_time = pygame.time.get_ticks()  
+                elapsed_time1 = pygame.time.get_ticks() - self.stop1_time
+                if elapsed_time1 <= 2500:  
                     self.shoot(gd)
                 else:
                     self.move(gd)
-            if ((self.stop2 - 1) <= self.x <= (self.stop2 + 1)):
-                stop2_time = pygame.time.get_ticks()
-                print(stop2_time)
-                if stop2_time <= 5000: 
+
+            elif ((self.stop2 - 1) <= self.x and self.x <= (self.stop2 + 1)):
+                if self.stop2_time is None:
+                    self.stop2_time = pygame.time.get_ticks()  
+                elapsed_time2 = pygame.time.get_ticks() - self.stop2_time
+                if elapsed_time2 <= 2500:  
                     self.shoot(gd)
                 else:
                     self.move(gd)
+
             else:
                 self.move(gd)
 
