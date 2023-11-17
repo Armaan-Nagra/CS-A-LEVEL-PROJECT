@@ -25,19 +25,24 @@ class enemy(pygame.sprite.Sprite):
         self.stop1_time = None
         self.stop2_time = None        
         self.player = gplayer
+        self.moving = True
+        self.stop1_passed = False
+        self.stop2_passed = False
+        
 
     def move(self,gd):
         current_time = pygame.time.get_ticks()
-        if current_time - self.last_time >= self.cooldown:
-            self.frame += 1
-            self.last_time = current_time
-            if self.frame >= 2:
-                self.frame = 0
-        self.x += self.speed 
-        if self.direction == 1:
-            gd.blit(pygame.transform.flip(self.spritesheet[self.frame],True ,False),(self.x,self.y))
-        else:
-            gd.blit(pygame.transform.flip(self.spritesheet[self.frame],False,False),(self.x,self.y))
+        if self.moving:
+            if current_time - self.last_time >= self.cooldown:
+                self.frame += 1
+                self.last_time = current_time
+                if self.frame >= 2:
+                    self.frame = 0
+            self.x += self.speed 
+            if self.direction == 1:
+                gd.blit(pygame.transform.flip(self.spritesheet[self.frame],True ,False),(self.x,self.y))
+            else:
+                gd.blit(pygame.transform.flip(self.spritesheet[self.frame],False,False),(self.x,self.y))
 
 
     def shoot(self,gd):
@@ -60,6 +65,8 @@ class enemy(pygame.sprite.Sprite):
             self.stop1 = random.randint(100,300)
             self.stop2 = random.randint(400,800)
             self.stops = 0
+        if self.moving == True:
+            self.move(gd)
         self.stop_move(gd)
         self.spawn_back()
 
@@ -67,38 +74,51 @@ class enemy(pygame.sprite.Sprite):
 
     def stop_move(self,gd):
         if self.stop2 == None: #if enemy stops once
-            if ((self.stop1 - 1) <= self.x and self.x <= (self.stop1 + 1)):
+            if ((self.stop1 - 1) <= self.x and self.x <= (self.stop1 + 1)) and self.stop1_passed == False:
+                self.moving = False
+                self.stop1_passed = True
+
+            if self.stop1_passed:
                 if self.stop1_time is None:
                     self.stop1_time = pygame.time.get_ticks()  
                 elapsed_time = pygame.time.get_ticks() - self.stop1_time
-                if elapsed_time <= 2500:  
+                if elapsed_time <= 2500:
                     self.shoot(gd)
                 else:
-                    self.move(gd)
-            else:
-                self.move(gd)
+                    self.moving = True
+                self.x -= 0.5
             
         if self.stop2 != None: #if enemy stops twice
-            if ((self.stop1 - 1) <= self.x and self.x <= (self.stop1 + 1)):
+            if ((self.stop1 - 1) <= self.x and self.x <= (self.stop1 + 1)) and self.stop1_passed == False:
+                self.moving = False
+                self.stop1_passed = True
+
+            if self.stop1_passed:
                 if self.stop1_time is None:
                     self.stop1_time = pygame.time.get_ticks()  
                 elapsed_time1 = pygame.time.get_ticks() - self.stop1_time
                 if elapsed_time1 <= 2500:  
                     self.shoot(gd)
                 else:
-                    self.move(gd)
+                    self.moving = True
+                self.x -= scroll_speed
 
-            elif ((self.stop2 - 1) <= self.x and self.x <= (self.stop2 + 1)):
+            elif ((self.stop2 - 1) <= self.x and self.x <= (self.stop2 + 1)) and self.stop2_passed == False:
+                self.moving = False
+                self.stop2_passed = True
+
+            if self.stop2_passed:
                 if self.stop2_time is None:
                     self.stop2_time = pygame.time.get_ticks()  
                 elapsed_time2 = pygame.time.get_ticks() - self.stop2_time
-                if elapsed_time2 <= 2500:  
-                    self.shoot(gd)
+                if elapsed_time2 <= 2500: 
+                    self.shoot(gd)  
                 else:
-                    self.move(gd)
+                    self.moving = True 
+                self.x -= scroll_speed
 
-            else:
-                self.move(gd)
+            #else:
+                #self.moving = True 
 
             
 
@@ -107,11 +127,15 @@ class enemy(pygame.sprite.Sprite):
     def spawn_back(self):
         if self.direction == 1 and self.x>= 1000:
             self.x = random.randint(-500,0)
-            self.stops = random.randint(1,2)
+            self.stops = random.randint(2,2)
             self.stop1_time = None
             self.stop2_time = None 
+            self.stop1_passed = False
+            self.stop2_passed = False
         if self.direction == 0 and self.x<= 0:
             self.x = random.randint(1000,1500)
-            self.stops = random.randint(1,2)
+            self.stops = random.randint(2,2)
             self.stop1_time = None
             self.stop2_time = None 
+            self.stop1_passed = False
+            self.stop2_passed = False

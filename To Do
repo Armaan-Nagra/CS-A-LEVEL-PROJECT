@@ -1,6 +1,8 @@
 TO DO:
 -when enemy stops, it stands "still"
--Implement the HUD which shows amount of enemies left
 -Check that the enemy dies when you shoot it
 -implement tank 
 -implement increasing difficulty
+-Implement the HUD which shows amount of enemies left
+
+implement logic so that the enemy moves without bumping into each other. Create logic to only have x enemies on screen at any one time.
