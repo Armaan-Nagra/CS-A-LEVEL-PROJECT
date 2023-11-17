@@ -65,6 +65,7 @@ white_shoot = pygame.image.load('Stages/Stage 5/photos/INGAME/white shoot.png')
 #load spritesheet
 soldier_spritesheet = pygame.image.load("Stages/Stage 5/photos/INGAME/invSpritesheet.png")
 
-
+max_enemies = 5
+enemies_killed = 0
 
 

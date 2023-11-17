@@ -9,8 +9,7 @@ from player import *
 from enemy import *
 import random
 
-soldier_group = pygame.sprite.Group()
-tank_group = pygame.sprite.Group()
+
 
 
 width, height, gameDisplay, clock = initialise_pygame_display()
@@ -28,14 +27,13 @@ animation_list.append(white_shoot)
 
 soldiers = pygame.sprite.Group()
 
-for x in range(40):  
+for x in range(5):  
     direction = random.getrandbits(1)
     if direction == 1:
-        enemy_soldier = enemy(random.randint(-15000,0),random.randint(250,600),100,animation_list,random.randint(2,2),direction,2,75,player1)
+        enemy_soldier = enemy(random.randint(-1000,0),random.randint(250,600),100,animation_list,random.randint(1,2),direction,2,75,player1)
     else:
-        enemy_soldier = enemy(random.randint(1000,15000),random.randint(250,600),100,animation_list,random.randint(2,2),direction,2,75,player1)
+        enemy_soldier = enemy(random.randint(1000,2000),random.randint(250,600),100,animation_list,random.randint(1,2),direction,2,75,player1)
     soldiers.add(enemy_soldier)
-
 
 
 gamestate = "start"
@@ -79,13 +77,12 @@ while gamestate != "end": #loops until the user wants to exit the game.
 
         background_music.stop()
 
-        
-
         #display the background
         gameDisplay.fill(white)
         
         scroll_background(gameDisplay)
         soldiers.update(gameDisplay)
+
         #display information about the player
         player1.health_bar(gameDisplay)
         gun.display_HUD(uzi,gameDisplay,750,800,775,925)
@@ -96,7 +93,17 @@ while gamestate != "end": #loops until the user wants to exit the game.
         grenade.shoot_effects(events["right-click"],grenade_sound, grenade_visual, gameDisplay,events["x"],events["y"],events["x"] - 125,events["y"] - 125)
         gun.draw_hitbox(gameDisplay,black,4,10)
 
+        #if len(soldiers) < max_enemies:
+            #direction = random.getrandbits(1)
+            #if direction == 1:
+            #    enemy_soldier = enemy(random.randint(-15000,0),random.randint(250,600),100,animation_list,random.randint(1,2),direction,2,75,player1)
+            #else:
+            #    enemy_soldier = enemy(random.randint(1000,15000),random.randint(250,600),100,animation_list,random.randint(1,2),direction,2,75,player1)
+            #soldiers.add(enemy_soldier)
         
+        if enemies_killed == 20:
+            max_enemies = 10
+
         
          
   

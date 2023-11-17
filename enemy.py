@@ -101,9 +101,11 @@ class enemy(pygame.sprite.Sprite):
                     self.shoot(gd)
                 else:
                     self.moving = True
+                    self.stop1_passed = None
                 self.x -= scroll_speed
+                
 
-            elif ((self.stop2 - 1) <= self.x and self.x <= (self.stop2 + 1)) and self.stop2_passed == False:
+            if ((self.stop2 - 2) <= self.x and self.x <= (self.stop2 + 2)) and self.stop2_passed == False:
                 self.moving = False
                 self.stop2_passed = True
 
@@ -115,10 +117,8 @@ class enemy(pygame.sprite.Sprite):
                     self.shoot(gd)  
                 else:
                     self.moving = True 
+                    self.stop2_passed = None
                 self.x -= scroll_speed
-
-            #else:
-                #self.moving = True 
 
             
 
@@ -127,14 +127,16 @@ class enemy(pygame.sprite.Sprite):
     def spawn_back(self):
         if self.direction == 1 and self.x>= 1000:
             self.x = random.randint(-500,0)
-            self.stops = random.randint(2,2)
+            self.y = random.randint(250,600)
+            self.stops = random.randint(1,2)
             self.stop1_time = None
             self.stop2_time = None 
             self.stop1_passed = False
             self.stop2_passed = False
         if self.direction == 0 and self.x<= 0:
             self.x = random.randint(1000,1500)
-            self.stops = random.randint(2,2)
+            self.y = random.randint(250,600)
+            self.stops = random.randint(1,2)
             self.stop1_time = None
             self.stop2_time = None 
             self.stop1_passed = False
