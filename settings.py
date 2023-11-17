@@ -47,8 +47,8 @@ black_cross = pygame.image.load('Stages/Stage 5/photos/INGAME/black_cross.png')
 
 #grenade
 grenade_image = pygame.image.load('Stages/Stage 5/photos/grenade-new.png')
-grenade_sound = pygame.mixer.Sound("Stages/Stage 5/sounds/vineboom.mp3")
-grenade_visual = pygame.image.load('Stages/Stage 5/photos/INGAME/temp.png')
+grenade_sound = pygame.mixer.Sound("Stages/Stage 5/sounds/explosion.mp3")
+grenade_visual = pygame.image.load('Stages/Stage 5/photos/INGAME/explosion.png')
 
 #level background
 background_image = pygame.image.load('Stages/Stage 5/photos/backgroundtest.png')

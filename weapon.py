@@ -12,23 +12,25 @@ class weapon():
 
         
 
-    def draw_hitbox(self,gd,colour):
+    def draw_hitbox(self,gd,colour,w,h):
         pygame.mouse.set_visible(False)
-        pygame.draw.rect(gd,colour, [self.x + 6, self.y ,5,2])
-        pygame.draw.rect(gd,colour, [self.x - 8, self.y ,5,2])
-        pygame.draw.rect(gd,colour, [self.x, self.y + 6 ,2,5])
-        pygame.draw.rect(gd,colour, [self.x , self.y - 8 ,2,5])
+        pygame.draw.rect(gd,colour, [self.x + 8, self.y - (w/2) ,h,w])
+        pygame.draw.rect(gd,colour, [self.x - 8 - h, self.y - (w/2) ,h,w])
+        pygame.draw.rect(gd,colour, [self.x - (w/2), self.y + 8 ,w,h])
+        pygame.draw.rect(gd,colour, [self.x - (w/2), self.y - 8 -h,w,h])
 
 
         
-    def shoot_effects(self,event,sound,visual,gd,x,y):
+    def shoot_effects(self,event,sound,visual,gd,x,y,ex,ey):
         self.x = x
         self.y = y
+        self.ex = ex
+        self.ey = ey
         if event == 1 and self.bullets > 0:
             now = pygame.time.get_ticks()
             if now - self.last_shot >= self.shot_delay:
                 sound.play()
-                gd.blit(visual,(self.x -25,self.y-25))
+                gd.blit(visual,(self.ex,self.ey))
                 self.bullets -= 1
                 
                 self.last_shot = pygame.time.get_ticks()

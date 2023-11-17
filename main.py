@@ -92,9 +92,9 @@ while gamestate != "end": #loops until the user wants to exit the game.
         grenade.display_HUD(grenade_image,gameDisplay,875,800,915,925)
 
         #weapon effects
-        gun.shoot_effects(events["left-click"],gunshot_sound, black_cross,gameDisplay,events["x"],events["y"])
-        grenade.shoot_effects(events["right-click"],grenade_sound, grenade_visual, gameDisplay,events["x"],events["y"])
-        gun.draw_hitbox(gameDisplay,black)
+        gun.shoot_effects(events["left-click"],gunshot_sound, black_cross,gameDisplay,events["x"],events["y"],events["x"] - 25,events["y"]-25)
+        grenade.shoot_effects(events["right-click"],grenade_sound, grenade_visual, gameDisplay,events["x"],events["y"],events["x"] - 125,events["y"]-125)
+        gun.draw_hitbox(gameDisplay,black,4,10)
 
         
         

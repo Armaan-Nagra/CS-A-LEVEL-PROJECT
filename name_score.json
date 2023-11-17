@@ -63,6 +63,14 @@
         {
             "username": "SSD",
             "high_score": 0
+        },
+        {
+            "username": "SAD",
+            "high_score": 0
+        },
+        {
+            "username": "DSA",
+            "high_score": 0
         }
     ]
 }
