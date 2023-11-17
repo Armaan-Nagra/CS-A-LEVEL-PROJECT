@@ -91,6 +91,10 @@
         {
             "username": "DS",
             "high_score": 0
+        },
+        {
+            "username": "F",
+            "high_score": 0
         }
     ]
 }

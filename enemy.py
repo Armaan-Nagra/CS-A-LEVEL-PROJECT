@@ -28,6 +28,7 @@ class enemy(pygame.sprite.Sprite):
         self.moving = True
         self.stop1_passed = False
         self.stop2_passed = False
+        self.rect = self.spritesheet[0].get_rect()
         
 
     def move(self,gd):
