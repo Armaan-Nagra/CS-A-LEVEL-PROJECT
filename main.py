@@ -79,7 +79,6 @@ while gamestate != "end": #loops until the user wants to exit the game.
 
         #display the background
         gameDisplay.fill(white)
-        
         scroll_background(gameDisplay)
         soldiers.update(gameDisplay)
 
@@ -89,16 +88,18 @@ while gamestate != "end": #loops until the user wants to exit the game.
         grenade.display_HUD(grenade_image,gameDisplay,875,800,915,925)
 
         #weapon effects
-        gun.shoot_effects(events["left-click"],gunshot_sound, black_cross,gameDisplay,events["x"],events["y"],events["x"] - 25,events["y"]-25,soldiers)
-        grenade.shoot_effects(events["right-click"],grenade_sound, grenade_visual, gameDisplay,events["x"],events["y"],events["x"] - 125,events["y"] - 125,soldiers)
+        gun_shoot = gun.shoot_effects(events["left-click"],gunshot_sound, black_cross,gameDisplay,events["x"],events["y"],events["x"] - 25,events["y"]-25,soldiers)
+        grenade_shoot = grenade.shoot_effects(events["right-click"],grenade_sound, grenade_visual, gameDisplay,events["x"],events["y"],events["x"] - 125,events["y"] - 125,soldiers)
         gun.draw_hitbox(gameDisplay,black,4,10)
+        
 
+        #gameplay, keeping track of enemy count
         if len(soldiers) < max_enemies:
             direction = random.getrandbits(1)
             if direction == 1:
-                enemy_soldier = enemy(random.randint(-15000,0),random.randint(250,600),100,animation_list,random.randint(1,2),direction,2,75,player1)
+                enemy_soldier = enemy(random.randint(-1500,0),random.randint(250,600),100,animation_list,random.randint(1,2),direction,2,75,player1)
             else:
-                enemy_soldier = enemy(random.randint(1000,15000),random.randint(250,600),100,animation_list,random.randint(1,2),direction,2,75,player1)
+                enemy_soldier = enemy(random.randint(1000,1500),random.randint(250,600),100,animation_list,random.randint(1,2),direction,2,75,player1)
             soldiers.add(enemy_soldier)
         
         if enemies_killed == 20:

@@ -40,6 +40,8 @@ class enemy(pygame.sprite.Sprite):
                 if self.frame >= 2:
                     self.frame = 0
             self.x += self.speed 
+            self.rect.x = self.x
+            self.rect.y = self.y
             if self.direction == 1:
                 gd.blit(pygame.transform.flip(self.spritesheet[self.frame],True ,False),(self.x,self.y))
             else:
@@ -70,6 +72,9 @@ class enemy(pygame.sprite.Sprite):
             self.move(gd)
         self.stop_move(gd)
         self.spawn_back()
+
+
+
 
         
 
@@ -134,7 +139,7 @@ class enemy(pygame.sprite.Sprite):
             self.stop2_time = None 
             self.stop1_passed = False
             self.stop2_passed = False
-        if self.direction == 0 and self.x<= 0:
+        if self.direction == 0 and self.x<= -100:
             self.x = random.randint(1000,1500)
             self.y = random.randint(250,600)
             self.stops = random.randint(1,2)
