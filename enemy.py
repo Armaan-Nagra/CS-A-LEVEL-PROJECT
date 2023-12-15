@@ -5,7 +5,7 @@ from settings import soldiers_killed, soldiers_left, tanks_left, tanks_shot
 
 
 class enemy(pygame.sprite.Sprite):
-    def __init__(self,gx,gy,ghealth,gspritesheet,gstops,gdirection,gspeed,gcooldown,gplayer,gtype):
+    def __init__(self,gx,gy,ghealth,gspritesheet,gstops,gdirection,gspeed,gcooldown,gplayer,gtype,gw,gh):
         pygame.sprite.Sprite.__init__(self)
         self.frame = 0
         self.x = gx
@@ -34,6 +34,8 @@ class enemy(pygame.sprite.Sprite):
         self.stop1_passed = False
         self.stop2_passed = False
         self.rect = self.spritesheet[0].get_rect()
+        self.w = gw
+        self.h = gh
         
 
     def move(self,gd):
@@ -164,7 +166,7 @@ class enemy(pygame.sprite.Sprite):
             self.stop2_time = None 
             self.stop1_passed = False
             self.stop2_passed = False
-        if self.direction == 0 and self.x<= -100:
+        if self.direction == 0 and (self.x<= (-self.w - 100)) :
             self.x = random.randint(1000,1500)
             self.y = random.randint(250,600)
             self.stops = random.randint(1,2)
