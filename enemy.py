@@ -159,7 +159,7 @@ class enemy(pygame.sprite.Sprite):
     
     def spawn_back(self):
         if self.direction == 1 and self.x>= 1000:
-            self.x = random.randint(-500,0)
+            self.x = random.randint(-500,0-(self.w+50))
             self.y = random.randint(250,600)
             self.stops = random.randint(1,2)
             self.stop1_time = None
