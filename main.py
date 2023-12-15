@@ -1,7 +1,7 @@
 import pygame
+from settings import *
 from events import *
 from functions import *
-from settings import *
 from button import *
 import json
 from weapon import *
@@ -74,7 +74,6 @@ while gamestate != "end": #loops until the user wants to exit the game.
         
 
     elif gamestate == "play":
-
         background_music.stop()
 
         #display the background
@@ -88,8 +87,8 @@ while gamestate != "end": #loops until the user wants to exit the game.
         grenade.display_HUD(grenade_image,gameDisplay,875,800,915,925)
 
         #weapon effects
-        gun_shoot = gun.shoot_effects(events["left-click"],gunshot_sound, black_cross,gameDisplay,events["x"],events["y"],events["x"] - 25,events["y"]-25,soldiers)
-        grenade_shoot = grenade.shoot_effects(events["right-click"],grenade_sound, grenade_visual, gameDisplay,events["x"],events["y"],events["x"] - 125,events["y"] - 125,soldiers)
+        gun.shoot_effects(events["left-click"],gunshot_sound, black_cross,gameDisplay,events["x"],events["y"],events["x"] - 25,events["y"]-25,soldiers)
+        grenade.shoot_effects(events["right-click"],grenade_sound, grenade_visual, gameDisplay,events["x"],events["y"],events["x"] - 125,events["y"] - 125,soldiers)
         gun.draw_hitbox(gameDisplay,black,4,10)
         
 
@@ -101,9 +100,10 @@ while gamestate != "end": #loops until the user wants to exit the game.
             else:
                 enemy_soldier = enemy(random.randint(1000,1500),random.randint(250,600),100,animation_list,random.randint(1,2),direction,2,75,player1)
             soldiers.add(enemy_soldier)
+        if (gun.get_enemies_killed()) >= 1:
+            max_enemies = 10   
+        print(gun.get_enemies_left())
         
-        if enemies_killed == 20:
-            max_enemies = 10
 
         
          

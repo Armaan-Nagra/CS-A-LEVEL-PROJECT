@@ -1,8 +1,5 @@
 TO DO:
--Check that the enemy dies when you shoot it
--fix the fact that I cannot kill enemies when they are shooting me
+-Implement HUD to show amount of enemies left.
 -implement tank 
--Implement the HUD which shows amount of enemies left
-
-
-implement logic so that the enemy moves without bumping into each other. 
+-implement logic so that the enemy moves without bumping into each other. 
+-fix the fact that I cannot kill enemies when they are shooting me

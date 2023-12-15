@@ -46,6 +46,7 @@ class enemy(pygame.sprite.Sprite):
                 gd.blit(pygame.transform.flip(self.spritesheet[self.frame],True ,False),(self.x,self.y))
             else:
                 gd.blit(pygame.transform.flip(self.spritesheet[self.frame],False,False),(self.x,self.y))
+        #print(enemies_left)
 
 
     def shoot(self,gd):
@@ -72,8 +73,7 @@ class enemy(pygame.sprite.Sprite):
             self.move(gd)
         self.stop_move(gd)
         self.spawn_back()
-
-
+        
 
 
         

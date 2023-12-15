@@ -1,7 +1,7 @@
 import pygame
-from settings import *
 import time
 from functions import *
+from settings import enemies_killed, enemies_left
 
 class weapon(pygame.sprite.Sprite):
     def __init__(self,gtype,gbullets,gdelay):
@@ -19,12 +19,22 @@ class weapon(pygame.sprite.Sprite):
         pygame.draw.rect(gd,colour, [self.x - (w/2), self.y - 8 -h,w,h])
 
     def check_collision(self, sprite_group):
+        global enemies_killed
+        global enemies_left
         for x in sprite_group:
-            print(x.rect)
             if x.rect.collidepoint(self.pos) and self.type == "uzi":
                 x.kill()
+                enemies_killed = enemies_killed + 1
+                enemies_left = enemies_left - 1
             if self.type == "grenade" and x.rect.colliderect(self.rect):
                 x.kill()
+                enemies_killed = enemies_killed + 1
+
+    def get_enemies_killed(self):
+        return enemies_killed
+
+    def get_enemies_left(self):
+        return enemies_left
 
         
     def shoot_effects(self,event,sound,visual,gd,x,y,ex,ey,sprite_group):
@@ -44,8 +54,8 @@ class weapon(pygame.sprite.Sprite):
                 gd.blit(visual,(self.ex,self.ey))
                 self.bullets -= 1
                 self.check_collision(sprite_group)
-                self.last_shot = pygame.time.get_ticks() 
-                
+                self.last_shot = pygame.time.get_ticks()
+
 
     def display_HUD(self,image,gd,ix,iy,bx,by):
         gd.blit(image,(ix,iy))
