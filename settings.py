@@ -64,12 +64,20 @@ run2 = pygame.image.load('Stages/Stage 5/photos/INGAME/run2.png')
 white_shoot = pygame.image.load('Stages/Stage 5/photos/INGAME/white shoot.png')
 soldier_headshot = pygame.image.load('Stages/Stage 5/photos/INGAME/soldier_headshot.png')
 #load spritesheet
-soldier_spritesheet = pygame.image.load("Stages/Stage 5/photos/INGAME/invSpritesheet.png")
+#soldier_spritesheet = pygame.image.load("Stages/Stage 5/photos/INGAME/invSpritesheet.png")
+
+#load tanks
+tank_white = pygame.image.load('Stages/Stage 5/photos/INGAME/tank shoot.png')
+tank1 = pygame.image.load('Stages/Stage 5/photos/INGAME/tank.png')
+tank2 = pygame.image.load('Stages/Stage 5/photos/INGAME/tank2.png')
+tank_shoot = pygame.image.load('Stages/Stage 5/photos/INGAME/tank3.png')
 
 global max_enemies, enemies_killed, enemies_left
 
 enemies_left = 40
 enemies_killed = 0
 max_enemies = 5
+
+
 
 

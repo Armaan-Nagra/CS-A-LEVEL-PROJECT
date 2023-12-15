@@ -18,23 +18,37 @@ player1 = player(0,1500,100)
 gun = weapon("uzi",101,150)
 grenade = weapon("grenade",5,500)
 
-animation_list = []
-animation_list.append(run1)
-animation_list.append(run2)
-animation_list.append(shooting_soldier)
-animation_list.append(white_shoot)
+soldier_spritesheet = []
+soldier_spritesheet.append(run1)
+soldier_spritesheet.append(run2)
+soldier_spritesheet.append(shooting_soldier)
+soldier_spritesheet.append(white_shoot)
+
+tank_spritesheet = []
+tank_spritesheet.append(tank1)
+tank_spritesheet.append(tank2)
+tank_spritesheet.append(tank_shoot)
+tank_spritesheet.append(tank_white) 
 
 
 soldiers = pygame.sprite.Group()
+tanks = pygame.sprite.Group()
 
 for x in range(5):  
     direction = random.getrandbits(1)
     if direction == 1:
-        enemy_soldier = enemy(random.randint(-1000,0),random.randint(250,600),100,animation_list,random.randint(1,2),direction,2,75,player1)
+        enemy_soldier = enemy(random.randint(-1000,0),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier")
     else:
-        enemy_soldier = enemy(random.randint(1000,2000),random.randint(250,600),100,animation_list,random.randint(1,2),direction,2,75,player1)
+        enemy_soldier = enemy(random.randint(1000,2000),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier")
     soldiers.add(enemy_soldier) 
 
+#direction = random.getrandbits(1)
+direction = 1
+if direction == 1:
+    enemy_tank = enemy(random.randint(-1000,0),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank")
+else:
+    enemy_tank = enemy(random.randint(1000,2000),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank")
+tanks.add(enemy_tank) 
 
 gamestate = "start"
 while gamestate != "end": #loops until the user wants to exit the game.
@@ -80,6 +94,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
         gameDisplay.fill(white)
         scroll_background(gameDisplay)
         soldiers.update(gameDisplay)
+        tanks.update(gameDisplay)
 
         #display information about the player
         player1.health_bar(gameDisplay)
@@ -96,10 +111,12 @@ while gamestate != "end": #loops until the user wants to exit the game.
         if len(soldiers) < max_enemies:
             direction = random.getrandbits(1)
             if direction == 1:
-                enemy_soldier = enemy(random.randint(-1500,0),random.randint(250,600),100,animation_list,random.randint(1,2),direction,2,75,player1)
+                enemy_soldier = enemy(random.randint(-1500,0),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier")
             else:
-                enemy_soldier = enemy(random.randint(1000,1500),random.randint(250,600),100,animation_list,random.randint(1,2),direction,2,75,player1)
+                enemy_soldier = enemy(random.randint(1000,1500),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier")
             soldiers.add(enemy_soldier)
+
+
         if (gun.get_enemies_killed()) >= 1:
             max_enemies = 10   
             

@@ -4,7 +4,7 @@ import random
 
 
 class enemy(pygame.sprite.Sprite):
-    def __init__(self,gx,gy,ghealth,gspritesheet,gstops,gdirection,gspeed,gcooldown,gplayer):
+    def __init__(self,gx,gy,ghealth,gspritesheet,gstops,gdirection,gspeed,gcooldown,gplayer,gtype):
         pygame.sprite.Sprite.__init__(self)
         self.frame = 0
         self.x = gx
@@ -18,10 +18,15 @@ class enemy(pygame.sprite.Sprite):
         self.cooldown = gcooldown
         self.stop1 = None
         self.stop2 = None
+        self.type = gtype
         if self.direction == 1:
             self.speed = gspeed
         else:
             self.speed = gspeed * -1
+            if self.type == "tank":
+                self.spritesheet[2] = pygame.transform.flip(self.spritesheet[2], True, False)
+                self.spritesheet[3] = pygame.transform.flip(self.spritesheet[3], True, False)  
+
         self.stop1_time = None
         self.stop2_time = None        
         self.player = gplayer
@@ -46,7 +51,6 @@ class enemy(pygame.sprite.Sprite):
                 gd.blit(pygame.transform.flip(self.spritesheet[self.frame],True ,False),(self.x,self.y))
             else:
                 gd.blit(pygame.transform.flip(self.spritesheet[self.frame],False,False),(self.x,self.y))
-        #print(enemies_left)
 
 
     def shoot(self,gd):
