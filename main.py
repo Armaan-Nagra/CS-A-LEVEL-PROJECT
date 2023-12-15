@@ -37,7 +37,7 @@ tanks = pygame.sprite.Group()
 for x in range(5):  
     direction = random.getrandbits(1)
     if direction == 1:
-        enemy_soldier = enemy(random.randint(-1000,0),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200)
+        enemy_soldier = enemy(random.randint(-1000,-150),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200)
     else:
         enemy_soldier = enemy(random.randint(1000,2000),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200)
     soldiers.add(enemy_soldier) 
@@ -45,7 +45,7 @@ for x in range(5):
 #direction = random.getrandbits(1)
 direction = 1
 if direction == 1:
-    enemy_tank = enemy(random.randint(-1000,0),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200)
+    enemy_tank = enemy(random.randint(-1000,-250),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200)
 else:
     enemy_tank = enemy(random.randint(1000,2000),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200)
 tanks.add(enemy_tank) 
@@ -111,7 +111,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
         if len(soldiers) < max_soldiers:
             direction = random.getrandbits(1)
             if direction == 1:
-                enemy_soldier = enemy(random.randint(-1500,0),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200)
+                enemy_soldier = enemy(random.randint(-1500,-150),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200)
             else:
                 enemy_soldier = enemy(random.randint(1000,1500),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200)
             soldiers.add(enemy_soldier)
@@ -119,7 +119,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
         if len(tanks) < max_tanks:
             direction = random.getrandbits(1)
             if direction == 1:
-                enemy_tank = enemy(random.randint(-1000,0),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200)
+                enemy_tank = enemy(random.randint(-1000,-250),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200)
             else:
                 enemy_tank = enemy(random.randint(1000,2000),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200)
             tanks.add(enemy_tank) 
