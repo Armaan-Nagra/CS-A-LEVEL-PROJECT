@@ -62,6 +62,7 @@ shooting_soldier = pygame.image.load('Stages/Stage 5/photos/INGAME/shooter.png')
 run1 = pygame.image.load('Stages/Stage 5/photos/INGAME/run1.png')
 run2 = pygame.image.load('Stages/Stage 5/photos/INGAME/run2.png')
 white_shoot = pygame.image.load('Stages/Stage 5/photos/INGAME/white shoot.png')
+soldier_headshot = pygame.image.load('Stages/Stage 5/photos/INGAME/soldier_headshot.png')
 #load spritesheet
 soldier_spritesheet = pygame.image.load("Stages/Stage 5/photos/INGAME/invSpritesheet.png")
 

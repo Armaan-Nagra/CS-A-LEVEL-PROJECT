@@ -164,4 +164,9 @@ def scroll_background(gd):
     #background_image is a variable stored in settings and it's displayed to the screen at x co-ordinate 0 and 2,000
     gd.blit(background_image, (background_x, 0)) 
     gd.blit(background_image, (background_x + 2000, 0))
-    
+
+def show_enemies(enemy_count,enemy_photo,x,y,gd):
+      gd.blit(enemy_photo, (x,y))
+      display_text(black,x+25,y+110,str(enemy_count),level_font)
+
+#def display_text(colour, x, y, message, font):

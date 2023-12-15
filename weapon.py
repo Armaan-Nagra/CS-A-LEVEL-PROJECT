@@ -29,6 +29,7 @@ class weapon(pygame.sprite.Sprite):
             if self.type == "grenade" and x.rect.colliderect(self.rect):
                 x.kill()
                 enemies_killed = enemies_killed + 1
+                enemies_left = enemies_left - 1
 
     def get_enemies_killed(self):
         return enemies_killed

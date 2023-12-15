@@ -102,7 +102,8 @@ while gamestate != "end": #loops until the user wants to exit the game.
             soldiers.add(enemy_soldier)
         if (gun.get_enemies_killed()) >= 1:
             max_enemies = 10   
-        print(gun.get_enemies_left())
+            
+        show_enemies(gun.get_enemies_left(),soldier_headshot,50,800,gameDisplay)
         
 
         
