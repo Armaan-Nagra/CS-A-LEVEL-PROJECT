@@ -102,25 +102,35 @@ while gamestate != "end": #loops until the user wants to exit the game.
         grenade.display_HUD(grenade_image,gameDisplay,875,800,915,925)
 
         #weapon effects
-        gun.shoot_effects(events["left-click"],gunshot_sound, black_cross,gameDisplay,events["x"],events["y"],events["x"] - 25,events["y"]-25,soldiers)
-        grenade.shoot_effects(events["right-click"],grenade_sound, grenade_visual, gameDisplay,events["x"],events["y"],events["x"] - 125,events["y"] - 125,soldiers)
+        gun.shoot_effects(events["left-click"],gunshot_sound, black_cross,gameDisplay,events["x"],events["y"],events["x"] - 25,events["y"]-25,[soldiers,tanks])
+        grenade.shoot_effects(events["right-click"],grenade_sound, grenade_visual, gameDisplay,events["x"],events["y"],events["x"] - 125,events["y"] - 125,[soldiers,tanks])
         gun.draw_hitbox(gameDisplay,black,4,10)
         
 
         #gameplay, keeping track of enemy count
-        if len(soldiers) < max_enemies:
+        if len(soldiers) < max_soldiers:
             direction = random.getrandbits(1)
             if direction == 1:
                 enemy_soldier = enemy(random.randint(-1500,0),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier")
             else:
                 enemy_soldier = enemy(random.randint(1000,1500),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier")
             soldiers.add(enemy_soldier)
+        
+        if len(tanks) < max_tanks:
+            direction = random.getrandbits(1)
+            if direction == 1:
+                enemy_tank = enemy(random.randint(-1000,0),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank")
+            else:
+                enemy_tank = enemy(random.randint(1000,2000),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank")
+            tanks.add(enemy_tank) 
 
-
-        if (gun.get_enemies_killed()) >= 1:
-            max_enemies = 10   
-            
-        show_enemies(gun.get_enemies_left(),soldier_headshot,50,800,gameDisplay)
+        # Assuming there is at least one enemy in the soldiers group
+        first_soldier = soldiers.sprites()[0]
+        if first_soldier.get_soldiers_killed() >= 1:
+            max_soldiers = 10   
+   
+        show_soldiers(first_soldier.get_soldiers_left(),soldier_headshot,50,800,gameDisplay)
+        show_tanks(first_soldier.get_tanks_left(),tank_small,170,820,gameDisplay)
         
 
         
@@ -130,3 +140,4 @@ while gamestate != "end": #loops until the user wants to exit the game.
     clock.tick(120)
 pygame.quit()
 quit()  
+

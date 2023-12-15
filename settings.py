@@ -71,13 +71,16 @@ tank_white = pygame.image.load('Stages/Stage 5/photos/INGAME/tank shoot.png')
 tank1 = pygame.image.load('Stages/Stage 5/photos/INGAME/tank.png')
 tank2 = pygame.image.load('Stages/Stage 5/photos/INGAME/tank2.png')
 tank_shoot = pygame.image.load('Stages/Stage 5/photos/INGAME/tank3.png')
+tank_small = pygame.image.load('Stages/Stage 5/photos/INGAME/tank_small.png')
 
-global max_enemies, enemies_killed, enemies_left
+global max_soldiers, soldiers_killed, soldiers_left
 
-enemies_left = 40
-enemies_killed = 0
-max_enemies = 5
+soldiers_left = 40
+soldiers_killed = 0
+max_soldiers = 5
 
-
+max_tanks = 1
+tanks_left = 5
+tanks_shot = 0
 
 

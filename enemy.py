@@ -1,6 +1,7 @@
 import pygame
 from settings import *
 import random
+from settings import soldiers_killed, soldiers_left, tanks_left, tanks_shot
 
 
 class enemy(pygame.sprite.Sprite):
@@ -26,7 +27,6 @@ class enemy(pygame.sprite.Sprite):
             if self.type == "tank":
                 self.spritesheet[2] = pygame.transform.flip(self.spritesheet[2], True, False)
                 self.spritesheet[3] = pygame.transform.flip(self.spritesheet[3], True, False)  
-
         self.stop1_time = None
         self.stop2_time = None        
         self.player = gplayer
@@ -66,6 +66,15 @@ class enemy(pygame.sprite.Sprite):
  
     
     def update(self,gd):
+        global tanks_left,tanks_shot,soldiers_killed,soldiers_left
+        if self.health <=0:
+            if self.type == "tank":
+                tanks_left -=1
+                tanks_shot += 1
+            if self.type == "soldier":
+                soldiers_killed += 1
+                soldiers_left -= 1
+            self.kill()
         if self.stops == 1:
             self.stop1 = random.randint(100,800)
             self.stops = 0
@@ -78,9 +87,21 @@ class enemy(pygame.sprite.Sprite):
         self.stop_move(gd)
         self.spawn_back()
         
-
-
         
+    def change_health(self,amount):
+        self.health -= amount
+
+    def get_soldiers_killed(self):
+        return soldiers_killed
+
+    def get_soldiers_left(self):
+        return soldiers_left
+    
+    def get_tanks_shot(self):
+        return tanks_shot
+
+    def get_tanks_left(self):
+        return tanks_left
 
     def stop_move(self,gd):
         if self.stop2 == None: #if enemy stops once
@@ -151,3 +172,4 @@ class enemy(pygame.sprite.Sprite):
             self.stop2_time = None 
             self.stop1_passed = False
             self.stop2_passed = False
+    

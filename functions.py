@@ -165,8 +165,12 @@ def scroll_background(gd):
     gd.blit(background_image, (background_x, 0)) 
     gd.blit(background_image, (background_x + 2000, 0))
 
-def show_enemies(enemy_count,enemy_photo,x,y,gd):
-      gd.blit(enemy_photo, (x,y))
-      display_text(black,x+25,y+110,str(enemy_count),level_font)
+def show_soldiers(soldier_count,soldier_photo,x,y,gd):
+      gd.blit(soldier_photo, (x,y))
+      display_text(black,x+25,y+110,str(soldier_count),level_font)
+
+def show_tanks(tank_count,tank_photo,x,y,gd):
+      gd.blit(tank_photo, (x,y))
+      display_text(black,x+45,y+90,str(tank_count),level_font)
 
 #def display_text(colour, x, y, message, font):
