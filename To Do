@@ -1,3 +1,4 @@
 TO DO:
--implement logic so that the enemy moves without bumping into each other. 
--fix the fact that I cannot kill enemies when they are shooting me
+-Bugs: When enemy is flashing (shooting), I sometimes cannot kill it with the uzi gun, however when I throw grenade it works.
+-Bugs: Sometimes, when the enemy stops shooting at me, it moves off with another soldier "stuck" to him. The soldier "stuck" is not usually animating, whereas the actual soldier is animating.
+-Improvement: implement logic so that the enemy moves without bumping into each other. 

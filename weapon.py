@@ -18,6 +18,7 @@ class weapon(pygame.sprite.Sprite):
         pygame.draw.rect(gd,colour, [self.x - (w/2), self.y - 8 -h,w,h])
 
     def check_collision(self, sprite_group):
+        #iterate through each sprite object in the group
         for x in sprite_group:
             if x.rect.collidepoint(self.pos) and self.type == "uzi":
                 x.change_health(100)

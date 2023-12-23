@@ -40,19 +40,18 @@ class enemy(pygame.sprite.Sprite):
 
     def move(self,gd):
         current_time = pygame.time.get_ticks()
-        if self.moving:
-            if current_time - self.last_time >= self.cooldown:
-                self.frame += 1
-                self.last_time = current_time
-                if self.frame >= 2:
-                    self.frame = 0
-            self.x += self.speed 
-            self.rect.x = self.x
-            self.rect.y = self.y
-            if self.direction == 1:
-                gd.blit(pygame.transform.flip(self.spritesheet[self.frame],True ,False),(self.x,self.y))
-            else:
-                gd.blit(pygame.transform.flip(self.spritesheet[self.frame],False,False),(self.x,self.y))
+        if current_time - self.last_time >= self.cooldown:
+            self.frame += 1
+            self.last_time = current_time
+            if self.frame >= 2:
+                self.frame = 0
+        self.x += self.speed 
+        self.rect.x = self.x
+        self.rect.y = self.y
+        if self.direction == 1:
+            gd.blit(pygame.transform.flip(self.spritesheet[self.frame],True ,False),(self.x,self.y))
+        else:
+            gd.blit(pygame.transform.flip(self.spritesheet[self.frame],False,False),(self.x,self.y))
 
 
     def shoot(self,gd):
@@ -68,7 +67,8 @@ class enemy(pygame.sprite.Sprite):
  
     
     def update(self,gd):
-        global tanks_left,tanks_shot,soldiers_killed,soldiers_left
+        global tanks_left,tanks_shot,soldiers_killed,soldiers_left #declare the 4 variables as global
+        #if the enemy's health is less than or equal to 0
         if self.health <=0:
             if self.type == "tank":
                 tanks_left -=1
@@ -76,14 +76,16 @@ class enemy(pygame.sprite.Sprite):
             if self.type == "soldier":
                 soldiers_killed += 1
                 soldiers_left -= 1
-            self.kill()
+            self.kill() #remove sprite object from sprite group
+        #if the enemy will stop once to shoot
         if self.stops == 1:
             self.stop1 = random.randint(100,800)
-            self.stops = 0
+            self.stops = 0 #reset stop count
+        #if the enemy will stop twice to shoot
         if self.stops == 2:
             self.stop1 = random.randint(100,300)
             self.stop2 = random.randint(400,800)
-            self.stops = 0
+            self.stops = 0 #reset stop count
         if self.moving == True:
             self.move(gd)
         self.stop_move(gd)
@@ -119,7 +121,7 @@ class enemy(pygame.sprite.Sprite):
                     self.shoot(gd)
                 else:
                     self.moving = True
-                self.x -= 0.5
+                self.x -= scroll_speed
             
         if self.stop2 != None: #if enemy stops twice
             if ((self.stop1 - 1) <= self.x and self.x <= (self.stop1 + 1)) and self.stop1_passed == False:
@@ -158,20 +160,18 @@ class enemy(pygame.sprite.Sprite):
         
     
     def spawn_back(self):
+        #if enemy is moving from left to right and its x position is greater than or equal to 1000
         if self.direction == 1 and self.x>= 1000:
-            self.x = random.randint(-500,0-(self.w+50))
+            self.x = random.randint(-500,0-(self.w+50)) 
             self.y = random.randint(250,600)
             self.stops = random.randint(1,2)
-            self.stop1_time = None
-            self.stop2_time = None 
             self.stop1_passed = False
             self.stop2_passed = False
+        #if enemy is moving from right to left and the right side of its sprite picture is less than or equal to 0
         if self.direction == 0 and (self.x<= (-self.w - 100)) :
             self.x = random.randint(1000,1500)
             self.y = random.randint(250,600)
             self.stops = random.randint(1,2)
-            self.stop1_time = None
-            self.stop2_time = None 
-            self.stop1_passed = False
+            self.stop1_passed = False   
             self.stop2_passed = False
     
