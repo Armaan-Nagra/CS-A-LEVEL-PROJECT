@@ -5,7 +5,7 @@ from settings import soldiers_killed, soldiers_left, tanks_left, tanks_shot
 
 
 class enemy(pygame.sprite.Sprite):
-    def __init__(self,gx,gy,ghealth,gspritesheet,gstops,gdirection,gspeed,gcooldown,gplayer,gtype,gw,gh):
+    def __init__(self,gx,gy,ghealth,gspritesheet,gstops,gdirection,gspeed,gcooldown,gplayer,gtype,gw,gh,gdamage):
         pygame.sprite.Sprite.__init__(self)
         self.frame = 0
         self.x = gx
@@ -36,6 +36,7 @@ class enemy(pygame.sprite.Sprite):
         self.rect = self.spritesheet[0].get_rect()
         self.w = gw
         self.h = gh
+        self.damage = gdamage
         
 
     def move(self,gd):
@@ -59,7 +60,7 @@ class enemy(pygame.sprite.Sprite):
         if current_time - self.last_time >= self.cooldown:
             self.last_time = current_time
             gd.blit(self.spritesheet[3],(self.x,self.y))
-            self.player.change_health(-0.5)
+            self.player.change_health(self.damage)
 
         else:
             gd.blit(self.spritesheet[2],(self.x,self.y))

@@ -1,14 +1,19 @@
 import pygame
 import time
 from functions import *
+from settings import *
 
 class weapon(pygame.sprite.Sprite):
-    def __init__(self,gtype,gbullets,gdelay):
+    def __init__(self,gtype,gbullets,gdelay,gsound):
         self.type = gtype
         self.shot_delay = gdelay
         self.last_shot = 0
         self.bullets = gbullets
-        
+        self.uzi_damage = 100
+        self.more_damage_active = False
+        self.current_bullets = 0
+        self.font_colour = black
+        self.sound = gsound
 
     def draw_hitbox(self,gd,colour,w,h):
         pygame.mouse.set_visible(False)
@@ -19,15 +24,25 @@ class weapon(pygame.sprite.Sprite):
 
     def check_collision(self, sprite_group):
         #iterate through each sprite object in the group
+        if self.more_damage_active == True:
+            self.current_bullets = self.bullets
+            self.bullets += 15
+            self.uzi_damage = 250
+            self.more_damage_active = False
+        if self.bullets <= self.current_bullets:
+            self.uzi_damage = 100
+            self.font_colour = black
+            self.sound = gunshot_sound
+
         for x in sprite_group:
             if x.rect.collidepoint(self.pos) and self.type == "uzi":
-                x.change_health(100)
+                x.change_health(self.uzi_damage)
 
             if self.type == "grenade" and x.rect.colliderect(self.rect):
-                x.change_health(300)
+                x.change_health(500)
 
         
-    def shoot_effects(self,event,sound,visual,gd,x,y,ex,ey,sprite_group):
+    def shoot_effects(self,event,visual,gd,x,y,ex,ey,sprite_group):
         self.x = x
         self.y = y
         self.ex = ex
@@ -40,7 +55,7 @@ class weapon(pygame.sprite.Sprite):
         if event == 1 and self.bullets > 0:
             now = pygame.time.get_ticks()
             if now - self.last_shot >= self.shot_delay:
-                sound.play()
+                self.sound.play()
                 gd.blit(visual,(self.ex,self.ey))
                 self.bullets -= 1
                 for x in sprite_group:
@@ -50,10 +65,15 @@ class weapon(pygame.sprite.Sprite):
 
     def display_HUD(self,image,gd,ix,iy,bx,by):
         gd.blit(image,(ix,iy))
-        display_text(black,bx,by,str(self.bullets),level_font)
+        display_text(self.font_colour,bx,by,str(self.bullets),level_font)
     
     def change_bullets(self,amount):
         self.bullets += amount
+
+    def more_damage(self,font_colour,machine_gun):
+        self.more_damage_active = True
+        self.font_colour = font_colour
+        self.sound = machine_gun
         
             
 

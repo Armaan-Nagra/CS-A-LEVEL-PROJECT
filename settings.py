@@ -87,3 +87,10 @@ no_soldiers = False
 
 #photos of powerups
 health_boost = pygame.image.load('Stages/Stage 5/photos/INGAME/healthboost.png')
+add_ammo = pygame.image.load('Stages/Stage 5/photos/INGAME/+15.png')
+hearts = pygame.image.load('Stages/Stage 5/photos/INGAME/hearts.png')
+
+#powerups sounds
+chaching = pygame.mixer.Sound('Stages/Stage 5/sounds/chaching.mp3')
+slurp = pygame.mixer.Sound('Stages/Stage 5/sounds/slurp.mp3')
+machine_gun = pygame.mixer.Sound('Stages/Stage 5/sounds/machine-gun.mp3')

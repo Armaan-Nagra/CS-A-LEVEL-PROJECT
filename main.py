@@ -16,8 +16,8 @@ from powerups import *
 width, height, gameDisplay, clock = initialise_pygame_display()
 
 player1 = player(0,1500,100)
-gun = weapon("uzi",101,150)
-grenade = weapon("grenade",5,500)
+gun = weapon("uzi",101,150,gunshot_sound)
+grenade = weapon("grenade",5,500,grenade_sound)
 powerups = powerups(player1, gun)
 
 soldier_spritesheet = []
@@ -38,17 +38,17 @@ tanks = pygame.sprite.Group()
 for x in range(5):  
     direction = random.getrandbits(1)
     if direction == 1:
-        enemy_soldier = enemy(random.randint(-1000,-150),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200)
+        enemy_soldier = enemy(random.randint(-1000,-150),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200,-0.5)
     else:
-        enemy_soldier = enemy(random.randint(1000,2000),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200)
+        enemy_soldier = enemy(random.randint(1000,2000),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200,-0.5)
     soldiers.add(enemy_soldier) 
 
 #direction = random.getrandbits(1)
 direction = 1
 if direction == 1:
-    enemy_tank = enemy(random.randint(-1000,-250),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200)
+    enemy_tank = enemy(random.randint(-1000,-250),random.randint(250,600),500,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200,-1)
 else:
-    enemy_tank = enemy(random.randint(1000,2000),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200)
+    enemy_tank = enemy(random.randint(1000,2000),random.randint(250,600),500,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200,-1)
 tanks.add(enemy_tank) 
 
 gamestate = "start"
@@ -116,10 +116,10 @@ while gamestate != "end": #loops until the user wants to exit the game.
         player1.health_bar(gameDisplay)
         gun.display_HUD(uzi,gameDisplay,750,800,775,925)
         grenade.display_HUD(grenade_image,gameDisplay,875,800,915,925)
-
+        
         #weapon effects
-        gun.shoot_effects(events["left-click"],gunshot_sound, black_cross,gameDisplay,events["x"],events["y"],events["x"] - 25,events["y"]-25,[soldiers,tanks])
-        grenade.shoot_effects(events["right-click"],grenade_sound, grenade_visual, gameDisplay,events["x"],events["y"],events["x"] - 125,events["y"] - 125,[soldiers,tanks])
+        gun.shoot_effects(events["left-click"], black_cross,gameDisplay,events["x"],events["y"],events["x"] - 25,events["y"]-25,[soldiers,tanks])
+        grenade.shoot_effects(events["right-click"], grenade_visual, gameDisplay,events["x"],events["y"],events["x"] - 125,events["y"] - 125,[soldiers,tanks])
         gun.draw_hitbox(gameDisplay,black,4,10)
         
         #declares how many enemies are allowed at any one time on the screen
@@ -132,17 +132,17 @@ while gamestate != "end": #loops until the user wants to exit the game.
         if len(soldiers) < max_soldiers and first_soldier.get_soldiers_left() >=0:
             direction = random.getrandbits(1)
             if direction == 1:
-                enemy_soldier = enemy(random.randint(-1500,-150),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200)
+                enemy_soldier = enemy(random.randint(-1500,-150),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200,-0.5)
             else:
-                enemy_soldier = enemy(random.randint(1000,1500),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200)
+                enemy_soldier = enemy(random.randint(1000,1500),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200,-0.5)
             soldiers.add(enemy_soldier)
         
         if len(tanks) < max_tanks and first_soldier.get_tanks_left() !=0:  
             direction = random.getrandbits(1)
             if direction == 1:
-                enemy_tank = enemy(random.randint(-1000,-250),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200)
+                enemy_tank = enemy(random.randint(-1000,-250),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200,-1)
             else:
-                enemy_tank = enemy(random.randint(1000,2000),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200)
+                enemy_tank = enemy(random.randint(1000,2000),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200,-1)
             tanks.add(enemy_tank) 
 
         #displays the amount of soldiers and tanks left
