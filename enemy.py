@@ -76,7 +76,9 @@ class enemy(pygame.sprite.Sprite):
             if self.type == "soldier":
                 soldiers_killed += 1
                 soldiers_left -= 1
-            self.kill() #remove sprite object from sprite group
+                print("removed") 
+            self.kill()
+            #remove sprite object from sprite group
         #if the enemy will stop once to shoot
         if self.stops == 1:
             self.stop1 = random.randint(100,800)

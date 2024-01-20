@@ -14,7 +14,7 @@ import random
 
 width, height, gameDisplay, clock = initialise_pygame_display()
 
-player1 = player(0,1500,100)
+player1 = player(0,1500,1000)
 gun = weapon("uzi",101,150)
 grenade = weapon("grenade",5,500)
 
@@ -33,7 +33,7 @@ tank_spritesheet.append(tank_white)
 
 soldiers = pygame.sprite.Group()
 tanks = pygame.sprite.Group()
-
+no_soldiers = False
 for x in range(5):  
     direction = random.getrandbits(1)
     if direction == 1:
@@ -89,6 +89,22 @@ while gamestate != "end": #loops until the user wants to exit the game.
 
     elif gamestate == "play":
         background_music.stop()
+        
+        #if player has no health, game is over
+        if getattr(player1,'health') <= 0:
+            print("you lose")
+            gamestate = "loss"
+
+        #I find the first soldier from the soldiers group if there is any
+        try:
+            first_soldier = soldiers.sprites()[0]
+        except:
+            no_soldiers = True
+
+        #if all soldiers are killed, player wins
+        if no_soldiers == True and first_soldier.get_tanks_left() == 0:
+            print("you killed them all")
+            gamestate = "win"
 
         #display the background
         gameDisplay.fill(white)
@@ -106,9 +122,14 @@ while gamestate != "end": #loops until the user wants to exit the game.
         grenade.shoot_effects(events["right-click"],grenade_sound, grenade_visual, gameDisplay,events["x"],events["y"],events["x"] - 125,events["y"] - 125,[soldiers,tanks])
         gun.draw_hitbox(gameDisplay,black,4,10)
         
+        #declares how many enemies are allowed at any one time on the screen
+        if first_soldier.get_soldiers_killed() >= 10 and first_soldier.get_soldiers_killed() <=29:
+            max_soldiers = 10 
+        if first_soldier.get_soldiers_killed() >= 30:
+            max_soldiers = first_soldier.get_soldiers_left() 
 
-        #gameplay, keeping track of enemy count
-        if len(soldiers) < max_soldiers:
+        #the two main if statements below make sure that the right amount of tanks and enemies are visible at any one time
+        if len(soldiers) < max_soldiers and first_soldier.get_soldiers_left() >=0:
             direction = random.getrandbits(1)
             if direction == 1:
                 enemy_soldier = enemy(random.randint(-1500,-150),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200)
@@ -116,7 +137,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
                 enemy_soldier = enemy(random.randint(1000,1500),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200)
             soldiers.add(enemy_soldier)
         
-        if len(tanks) < max_tanks:
+        if len(tanks) < max_tanks and first_soldier.get_tanks_left() !=0:  
             direction = random.getrandbits(1)
             if direction == 1:
                 enemy_tank = enemy(random.randint(-1000,-250),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200)
@@ -124,15 +145,9 @@ while gamestate != "end": #loops until the user wants to exit the game.
                 enemy_tank = enemy(random.randint(1000,2000),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200)
             tanks.add(enemy_tank) 
 
-        # Assuming there is at least one enemy in the soldiers group, may not be good long term
-        first_soldier = soldiers.sprites()[0]
-        if first_soldier.get_soldiers_killed() >= 10:
-            max_soldiers = 10   
-   
+        #displays the amount of soldiers and tanks left
         show_soldiers(first_soldier.get_soldiers_left(),soldier_headshot,50,800,gameDisplay)
         show_tanks(first_soldier.get_tanks_left(),tank_small,170,820,gameDisplay)
-        
-
         
          
   
