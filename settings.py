@@ -83,4 +83,7 @@ max_tanks = 1
 tanks_left = 5
 tanks_shot = 0
 
+no_soldiers = False
 
+#photos of powerups
+health_boost = pygame.image.load('Stages/Stage 5/photos/INGAME/healthboost.png')

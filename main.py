@@ -8,15 +8,17 @@ from weapon import *
 from player import *
 from enemy import *
 import random
+from powerups import *
 
 
 
 
 width, height, gameDisplay, clock = initialise_pygame_display()
 
-player1 = player(0,1500,1000)
+player1 = player(0,1500,100)
 gun = weapon("uzi",101,150)
 grenade = weapon("grenade",5,500)
+powerups = powerups(player1, gun)
 
 soldier_spritesheet = []
 soldier_spritesheet.append(run1)
@@ -33,7 +35,6 @@ tank_spritesheet.append(tank_white)
 
 soldiers = pygame.sprite.Group()
 tanks = pygame.sprite.Group()
-no_soldiers = False
 for x in range(5):  
     direction = random.getrandbits(1)
     if direction == 1:
@@ -92,7 +93,6 @@ while gamestate != "end": #loops until the user wants to exit the game.
         
         #if player has no health, game is over
         if getattr(player1,'health') <= 0:
-            print("you lose")
             gamestate = "loss"
 
         #I find the first soldier from the soldiers group if there is any
@@ -103,12 +103,12 @@ while gamestate != "end": #loops until the user wants to exit the game.
 
         #if all soldiers are killed, player wins
         if no_soldiers == True and first_soldier.get_tanks_left() == 0:
-            print("you killed them all")
             gamestate = "win"
 
         #display the background
         gameDisplay.fill(white)
         scroll_background(gameDisplay)
+        powerups.update(first_soldier.get_soldiers_left(),gameDisplay,events["x"],events["y"],events["left-click"])
         soldiers.update(gameDisplay)
         tanks.update(gameDisplay)
 

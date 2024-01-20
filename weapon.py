@@ -51,6 +51,9 @@ class weapon(pygame.sprite.Sprite):
     def display_HUD(self,image,gd,ix,iy,bx,by):
         gd.blit(image,(ix,iy))
         display_text(black,bx,by,str(self.bullets),level_font)
+    
+    def change_bullets(self,amount):
+        self.bullets += amount
         
             
 
