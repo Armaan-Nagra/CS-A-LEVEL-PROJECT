@@ -70,10 +70,10 @@ class weapon(pygame.sprite.Sprite):
     def change_bullets(self,amount):
         self.bullets += amount
 
-    def more_damage(self,font_colour,machine_gun):
+    def more_damage(self,font_colour,sound):
         self.more_damage_active = True
         self.font_colour = font_colour
-        self.sound = machine_gun
+        self.sound = sound
         
             
 

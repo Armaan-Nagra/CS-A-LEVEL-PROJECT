@@ -10,15 +10,12 @@ from enemy import *
 import random
 from powerups import *
 
-
-
-
 width, height, gameDisplay, clock = initialise_pygame_display()
 
 player1 = player(0,1500,100)
 gun = weapon("uzi",101,150,gunshot_sound)
 grenade = weapon("grenade",5,500,grenade_sound)
-powerups = powerups(player1, gun)
+powerups = powerups(player1, gun,random.randint(800,1100),-100,300, gameDisplay)
 
 soldier_spritesheet = []
 soldier_spritesheet.append(run1)
@@ -95,7 +92,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
         if getattr(player1,'health') <= 0:
             gamestate = "loss"
 
-        #I find the first soldier from the soldiers group if there is any
+        #I find the first soldier from the soldiers group if there is any 
         try:
             first_soldier = soldiers.sprites()[0]
         except:
@@ -108,7 +105,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
         #display the background
         gameDisplay.fill(white)
         scroll_background(gameDisplay)
-        powerups.update(first_soldier.get_soldiers_left(),gameDisplay,events["x"],events["y"],events["left-click"])
+        powerups.update(first_soldier.get_soldiers_left(),events["x"],events["y"],events["left-click"])
         soldiers.update(gameDisplay)
         tanks.update(gameDisplay)
 
@@ -116,7 +113,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
         player1.health_bar(gameDisplay)
         gun.display_HUD(uzi,gameDisplay,750,800,775,925)
         grenade.display_HUD(grenade_image,gameDisplay,875,800,915,925)
-        
+         
         #weapon effects
         gun.shoot_effects(events["left-click"], black_cross,gameDisplay,events["x"],events["y"],events["x"] - 25,events["y"]-25,[soldiers,tanks])
         grenade.shoot_effects(events["right-click"], grenade_visual, gameDisplay,events["x"],events["y"],events["x"] - 125,events["y"] - 125,[soldiers,tanks])
