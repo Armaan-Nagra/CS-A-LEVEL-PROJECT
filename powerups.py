@@ -29,7 +29,7 @@ class powerups():
         for powerup in self.powerups_list:
             if powerup == soldiers and self.moving==False:
                 #choose a random power up
-                self.type = random.choice(["health","ammo","damage"])
+                self.type = "ammo"#random.choice(["health","ammo","damage"])
                 #removes the random integer from the list so that multiple power ups are not spawned
                 self.powerups_list.remove(powerup)
                 #flag is turned on to spawn the power up
@@ -63,7 +63,7 @@ class powerups():
     def move(self):
         #if the y co-ordinate of the crate is less than or equal to 350, it's increased by 5
         if self.y <= 350:
-            self.y+=1
+            self.y+=5
         
         #if self.y is greater than or equal to 350 (crate has reached the floor), the x co-ordinate of the crate increase proportionally to background
         if self.y >= 350:
@@ -119,11 +119,11 @@ class powerups():
     def visual_effect(self):
         #surface created with the size of the message/image
         temp = pygame.Surface(self.size).convert()
-        #what does this actually do??!!
+        #a copy of the game display is drawn onto the temp surface 
         temp.blit(self.gd, (-self.message_x, -self.message_y))
         #photo of visual effect drawn onto surface
         temp.blit(self.message_photo, (0, 0))
-        #opacity of the image is changed to "opacity"
+        #opacity of the surface is changed to "opacity"
         temp.set_alpha(self.opacity)        
         #surface drawn onto game display
         self.gd.blit(temp, (self.message_x,self.message_y))
