@@ -94,3 +94,6 @@ hearts = pygame.image.load('Stages/Stage 5/photos/INGAME/hearts.png')
 chaching = pygame.mixer.Sound('Stages/Stage 5/sounds/chaching.mp3')
 slurp = pygame.mixer.Sound('Stages/Stage 5/sounds/slurp.mp3')
 machine_gun = pygame.mixer.Sound('Stages/Stage 5/sounds/machine-gun.mp3')
+
+global last_stamp
+last_stamp = 0

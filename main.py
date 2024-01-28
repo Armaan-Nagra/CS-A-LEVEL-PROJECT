@@ -12,7 +12,7 @@ from powerups import *
 
 width, height, gameDisplay, clock = initialise_pygame_display()
 
-player1 = player(0,1500,1000)
+player1 = player(0,1500,100)
 gun = weapon("uzi",101,150,gunshot_sound)
 grenade = weapon("grenade",5,500,grenade_sound)
 powerups = powerups(player1, gun,random.randint(800,1100),-100,300, gameDisplay)
@@ -50,18 +50,18 @@ tanks.add(enemy_tank)
 
 gamestate = "start"
 while gamestate != "end": #loops until the user wants to exit the game.
-    events = get_events() #the variable events contains the dictionary of events returned by get_events()z
+    events = get_events() #the variable events contains the dictionary of events returned by get_events()
     if events["quit"] == 1 or events["esc"] == 1: # if user presses the x on the top right of display or presses esc key
         gamestate = "end" #the gamestate is equal to "end" and the loop stops and the user leaves
     elif gamestate == "start": 
         play_music(background_music) #play_music function is called which creates the background music 
         draw_cover(main_background) #this function draws the cover of the game onto the screen
-        gamestate = can_proceed(events) # this function returns whether the display should proceed onto the next screen by listening for space key    
+        gamestate = can_proceed(events) # this function returns whether the display should proceed onto the next screesn by listening for space key    
 
     elif gamestate == "name":
         #global name
         draw_messages_and_title(gameDisplay)
-        name = ask_name(gameDisplay)
+        name = ask_name(gameDisplay,events)
         display_text(black,50,715,"Enter Name:",base_font)
         b = button(300,850,100,350,gameDisplay,dark_green,"name", "menu", "SUBMIT", 90, white, events)
         gamestate = b.name(name)

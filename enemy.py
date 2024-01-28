@@ -95,9 +95,6 @@ class enemy(pygame.sprite.Sprite):
             self.move(gd)
         self.stop_move(gd)
         self.spawn_back()
-        if self.type =="tank":
-            print(self.direction)
-        
         
     def change_health(self,amount):
         self.health -= amount
