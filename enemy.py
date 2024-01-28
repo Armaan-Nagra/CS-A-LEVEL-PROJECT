@@ -172,13 +172,20 @@ class enemy(pygame.sprite.Sprite):
             self.x = random.randint(-500,0-(self.w+50)) 
             self.y = random.randint(250,600)
             self.stops = random.randint(1,2)
+            self.stop1 = None
+            self.stop2 = None
             self.stop1_passed = False
             self.stop2_passed = False
+            self.stop1_time = None
+            self.stop2_time = None
         #if enemy is moving from right to left and the right side of its sprite picture is less than or equal to 0
         if self.direction == 0 and (self.x<= (-self.w - 100)) :
             self.x = random.randint(1000,1500)
             self.y = random.randint(250,600)
             self.stops = random.randint(1,2)
+            self.stop1 = None
+            self.stop2 = None
             self.stop1_passed = False   
             self.stop2_passed = False
-    
+            self.stop1_time = None
+            self.stop2_time = None    

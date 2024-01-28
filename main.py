@@ -12,7 +12,7 @@ from powerups import *
 
 width, height, gameDisplay, clock = initialise_pygame_display()
 
-player1 = player(0,1500,10000)
+player1 = player(0,1500,1000)
 gun = weapon("uzi",101,150,gunshot_sound)
 grenade = weapon("grenade",5,500,grenade_sound)
 powerups = powerups(player1, gun,random.randint(800,1100),-100,300, gameDisplay)
