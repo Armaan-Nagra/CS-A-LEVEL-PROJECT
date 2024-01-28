@@ -37,6 +37,8 @@ class enemy(pygame.sprite.Sprite):
         self.w = gw
         self.h = gh
         self.damage = gdamage
+        self.rect.x = 0
+        self.rect.y = 0
         
 
     def move(self,gd):
@@ -47,8 +49,6 @@ class enemy(pygame.sprite.Sprite):
             if self.frame >= 2:
                 self.frame = 0
         self.x += self.speed 
-        self.rect.x = self.x
-        self.rect.y = self.y
         if self.direction == 1:
             gd.blit(pygame.transform.flip(self.spritesheet[self.frame],True ,False),(self.x,self.y))
         else:
@@ -70,6 +70,8 @@ class enemy(pygame.sprite.Sprite):
     def update(self,gd):
         global tanks_left,tanks_shot,soldiers_killed,soldiers_left #declare the 4 variables as global
         #if the enemy's health is less than or equal to 0
+        self.rect.x = self.x
+        self.rect.y = self.y
         if self.health <=0:
             if self.type == "tank":
                 tanks_left -=1
