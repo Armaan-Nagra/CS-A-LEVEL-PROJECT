@@ -22,11 +22,8 @@ class enemy(pygame.sprite.Sprite):
         self.type = gtype
         if self.direction == 1:
             self.speed = gspeed
-        else:
+        if self.direction == 0:
             self.speed = gspeed * -1
-            if self.type == "tank":
-                self.spritesheet[2] = pygame.transform.flip(self.spritesheet[2], True, False)
-                self.spritesheet[3] = pygame.transform.flip(self.spritesheet[3], True, False)  
         self.stop1_time = None
         self.stop2_time = None        
         self.player = gplayer
@@ -59,12 +56,16 @@ class enemy(pygame.sprite.Sprite):
         current_time = pygame.time.get_ticks()
         if current_time - self.last_time >= self.cooldown:
             self.last_time = current_time
-            gd.blit(self.spritesheet[3],(self.x,self.y))
+            if self.direction == 1:
+                gd.blit(self.spritesheet[3],(self.x,self.y))
+            if self.direction == 0:
+                gd.blit(pygame.transform.flip(self.spritesheet[3],True,False),(self.x,self.y))
             self.player.change_health(self.damage)
-
         else:
-            gd.blit(self.spritesheet[2],(self.x,self.y))
-
+            if self.direction == 1:
+                gd.blit(self.spritesheet[2],(self.x,self.y))
+            if self.direction == 0:
+                gd.blit(pygame.transform.flip(self.spritesheet[2],True,False),(self.x,self.y))
  
     
     def update(self,gd):
@@ -94,6 +95,8 @@ class enemy(pygame.sprite.Sprite):
             self.move(gd)
         self.stop_move(gd)
         self.spawn_back()
+        if self.type =="tank":
+            print(self.direction)
         
         
     def change_health(self,amount):

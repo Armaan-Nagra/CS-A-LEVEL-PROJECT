@@ -40,8 +40,8 @@ for x in range(5):
         enemy_soldier = enemy(random.randint(1000,2000),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200,-0.5)
     soldiers.add(enemy_soldier) 
 
-#direction = random.getrandbits(1)
-direction = 1
+direction = random.getrandbits(1)
+# direction = 0
 if direction == 1:
     enemy_tank = enemy(random.randint(-1000,-250),random.randint(250,600),500,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200,-1)
 else:
@@ -136,6 +136,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
         
         if len(tanks) < max_tanks and first_soldier.get_tanks_left() !=0:  
             direction = random.getrandbits(1)
+            #direction = 1
             if direction == 1:
                 enemy_tank = enemy(random.randint(-1000,-250),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200,-1)
             else:
