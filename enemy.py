@@ -54,14 +54,20 @@ class enemy(pygame.sprite.Sprite):
 
     def shoot(self,gd):
         current_time = pygame.time.get_ticks()
+        #display the "flashing" animation when shooting
         if current_time - self.last_time >= self.cooldown:
             self.last_time = current_time
+            #if enemy moving from left to right
             if self.direction == 1:
                 gd.blit(self.spritesheet[3],(self.x,self.y))
+            #if enemy moving from right to left
             if self.direction == 0:
                 gd.blit(pygame.transform.flip(self.spritesheet[3],True,False),(self.x,self.y))
+            #decrease health
             self.player.change_health(self.damage)
+
         else:
+            #display the "normal" shooting animation
             if self.direction == 1:
                 gd.blit(self.spritesheet[2],(self.x,self.y))
             if self.direction == 0:

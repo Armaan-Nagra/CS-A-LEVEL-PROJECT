@@ -40,8 +40,7 @@ def draw_messages_and_title(gameDisplay):
 
 def ask_name(gameDisplay,events):
     global name_placeholder, input_rect, inside_input_box #makes variables global
-    #for event in pygame.event.get():
-     #   if event.type == pygame.MOUSEBUTTONDOWN:
+
     if events["left-click"] == 1:
         if input_rect.collidepoint((events["x"],events["y"])):
             inside_input_box = True # if the user clicks on the input box the variable is set to true
@@ -49,8 +48,8 @@ def ask_name(gameDisplay,events):
         if inside_input_box:
             now = pygame.time.get_ticks()
             global last_stamp
-            if now - last_stamp >= 140:
-                if events["back-space"] == 1: #if it is done too fast, add an algorithm/timer
+            if now - last_stamp >= 115: #simple algorithm to restrict how many characters are inputted, it is one character every 115 ms right now
+                if events["back-space"] == 1: 
                     name_placeholder = name_placeholder[:-1] # if user presses backspace, a letter from name is deleted
                 else:
                     name_placeholder += events["character"] #character is added to name variable depending on key pressed
