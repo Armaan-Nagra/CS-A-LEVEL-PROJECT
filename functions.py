@@ -177,4 +177,8 @@ def show_tanks(tank_count,tank_photo,x,y,gd):
       gd.blit(tank_photo, (x,y))
       display_text(black,x+45,y+90,str(tank_count),level_font)
 
-#def display_text(colour, x, y, message, font):
+
+def display_pause_menu(gd,score, high_score):
+    gd.blit(pause_menu,(100,150))
+    display_text(white,600,289,str(int(score)),arcade_font)
+    display_text(white,600,385,str(int(high_score)),arcade_font)

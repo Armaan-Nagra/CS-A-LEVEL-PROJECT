@@ -6,6 +6,7 @@ class player():
         self.score = gscore
         self.high_score = ghigh_score
         self.health = ghealth
+        self.current_score = 0
 
 
 
@@ -20,5 +21,8 @@ class player():
 
     def change_name(self,name):
         self.name = name
+
+    def calculate_score(self,ammo,timer,enemies_killed,tanks_shot):
+	    self.current_score = 500 + (200*enemies_killed)+(500*tanks_shot)-((100-self.health)+(100-ammo)) - (timer*0.01)
 
 

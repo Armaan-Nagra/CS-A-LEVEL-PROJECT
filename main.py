@@ -9,13 +9,15 @@ from player import *
 from enemy import *
 import random
 from powerups import *
+from timer import *
 
 width, height, gameDisplay, clock = initialise_pygame_display()
 
-player1 = player(0,1500,100)
+player1 = player(0,9812,100)
 gun = weapon("uzi",101,150,gunshot_sound)
 grenade = weapon("grenade",5,500,grenade_sound)
 powerups = powerups(player1, gun,random.randint(800,1100),-100,300, gameDisplay)
+timer = PausableTimer()
 
 soldier_spritesheet = []
 soldier_spritesheet.append(run1)
@@ -88,6 +90,16 @@ while gamestate != "end": #loops until the user wants to exit the game.
     elif gamestate == "play":
         background_music.stop()
         
+        #start timer if the game just started
+        if getattr(timer,'started') == False:
+            timer.start()
+
+        #if the player wants to pause
+        if events["space"] == 1:
+            #pause the timer
+            timer.pause()
+            gamestate = "pause"
+
         #if player has no health, game is over
         if getattr(player1,'health') <= 0:
             gamestate = "loss"
@@ -146,7 +158,17 @@ while gamestate != "end": #loops until the user wants to exit the game.
         #displays the amount of soldiers and tanks left
         show_soldiers(first_soldier.get_soldiers_left(),soldier_headshot,50,800,gameDisplay)
         show_tanks(first_soldier.get_tanks_left(),tank_small,170,820,gameDisplay)
-        
+
+        #calculate the player's score
+        player1.calculate_score(getattr(gun,'bullets'),timer.get_elapsed_time(),enemy_soldier.get_soldiers_killed(),enemy_tank.get_tanks_shot())
+
+    elif gamestate == "pause":
+        if events["enter"] == 1:
+            timer.resume()
+            gamestate = "play"
+
+        #blit the player's score and a box in the middle
+        display_pause_menu(gameDisplay,getattr(player1,"current_score"),getattr(player1,"high_score"))
          
   
     pygame.display.update()# this line updates the display so that when a change happens in the loop it is displayed.

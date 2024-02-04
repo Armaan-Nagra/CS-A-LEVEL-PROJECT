@@ -15,6 +15,7 @@ events = {
     "back-space": 0,
     "character": None,
     "letter-done": 0,
+    "enter": 0,
     }
 
 #the function below assigns a value to the keys in the dictionary above.
@@ -33,6 +34,8 @@ def get_events():
                     events["esc"] = 1
                 if event.key == pygame.K_BACKSPACE:
                     events["back-space"] = 1
+                if event.key == pygame.K_RETURN:
+                    events["enter"] = 1
             if event.type == pygame.KEYUP: #checks if they keyboard key has been released
                 if events["letter-done"] == 1:
                     events["letter-done"] = 0
@@ -43,6 +46,8 @@ def get_events():
                     events["esc"] = 0
                 if event.key == pygame.K_BACKSPACE:
                     events["back-space"] = 0
+                if event.key == pygame.K_RETURN:
+                    events["enter"] = 0
             if event.type == pygame.MOUSEBUTTONDOWN: #checks if the mouse button is clicked
                 if event.button == 1:
                     events["left-click"] = 1

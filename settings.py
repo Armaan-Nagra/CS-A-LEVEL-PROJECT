@@ -97,3 +97,6 @@ machine_gun = pygame.mixer.Sound('Stages/Stage 5/sounds/machine-gun.mp3')
 
 global last_stamp
 last_stamp = 0
+
+#pause menu
+pause_menu = pygame.image.load('Stages/Stage 6/images/pause_menu.png')
