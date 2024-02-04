@@ -167,7 +167,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
             timer.resume()
             gamestate = "play"
 
-        #blit the player's score and a box in the middle
+        #display the pause menu with scores information
         display_pause_menu(gameDisplay,getattr(player1,"current_score"),getattr(player1,"high_score"))
          
   
