@@ -169,7 +169,13 @@ while gamestate != "end": #loops until the user wants to exit the game.
 
         #display the pause menu with scores information
         display_pause_menu(gameDisplay,getattr(player1,"current_score"),getattr(player1,"high_score"))
-         
+    
+    elif gamestate == "loss":
+        play_animation()
+
+    elif gamestate == "win":
+        #play_animation() 
+        check_score(getattr(player1,"name"),getattr(player1,"current_score"),getattr(player1,"high_score"))
   
     pygame.display.update()# this line updates the display so that when a change happens in the loop it is displayed.
     clock.tick(120)
