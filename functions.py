@@ -189,5 +189,5 @@ def check_score(name,new_score,high_score):
         for x in file["users"]:
             if x["username"] == name.upper():
                 x["high_score"] = int(new_score)
-    with open('name_score_json', 'w') as output_file:
+    with open('name_score.json', 'w') as output_file:
         json.dump(file, output_file, indent=3)

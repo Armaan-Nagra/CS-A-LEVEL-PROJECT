@@ -13,7 +13,7 @@ from timer import *
 
 width, height, gameDisplay, clock = initialise_pygame_display()
 
-player1 = player(0,9812,100)
+player1 = player(0,0,100)
 gun = weapon("uzi",101,150,gunshot_sound)
 grenade = weapon("grenade",5,500,grenade_sound)
 powerups = powerups(player1, gun,random.randint(800,1100),-100,300, gameDisplay)
@@ -171,11 +171,14 @@ while gamestate != "end": #loops until the user wants to exit the game.
         display_pause_menu(gameDisplay,getattr(player1,"current_score"),getattr(player1,"high_score"))
     
     elif gamestate == "loss":
-        play_animation()
+        #play_animation()
+        check_score(getattr(player1,"name"),int(getattr(player1,"current_score") - 2000),getattr(player1,"high_score"))
+        #loss_screen()
 
     elif gamestate == "win":
         #play_animation() 
         check_score(getattr(player1,"name"),getattr(player1,"current_score"),getattr(player1,"high_score"))
+        Win_screen()
   
     pygame.display.update()# this line updates the display so that when a change happens in the loop it is displayed.
     clock.tick(120)
