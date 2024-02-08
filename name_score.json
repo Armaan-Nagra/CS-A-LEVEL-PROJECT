@@ -1,44 +1,72 @@
 {
-    "users": [
-        {
-            "username": "SD",
-            "high_score": 0
-        },
-        {
-            "username": "SFD",
-            "high_score": 0
-        },
-        {
-            "username": "SF",
-            "high_score": 0
-        },
-        {
-            "username": "S",
-            "high_score": 0
-        },
-        {
-            "username": "D",
-            "high_score": 0
-        },
-        {
-            "username": "AA",
-            "high_score": 0
-        },
-        {
-            "username": " S",
-            "high_score": 0
-        },
-        {
-            "username": " ARMAAN",
-            "high_score": 10000.45
-        },
-        {
-            "username": "SS",
-            "high_score": 0
-        },
-        {
-            "username": "SDD",
-            "high_score": 0
-        }
-    ]
+   "users": [
+      {
+         "username": "SD",
+         "high_score": 0
+      },
+      {
+         "username": "SFD",
+         "high_score": 0
+      },
+      {
+         "username": "SF",
+         "high_score": 0
+      },
+      {
+         "username": "S",
+         "high_score": 0
+      },
+      {
+         "username": "D",
+         "high_score": 0
+      },
+      {
+         "username": "AA",
+         "high_score": 0
+      },
+      {
+         "username": " S",
+         "high_score": 0
+      },
+      {
+         "username": " ARMAAN",
+         "high_score": 10000.45
+      },
+      {
+         "username": "SS",
+         "high_score": 0
+      },
+      {
+         "username": "SDD",
+         "high_score": 0
+      },
+      {
+         "username": "AAWWQ",
+         "high_score": 0
+      },
+      {
+         "username": "EHEFFF",
+         "high_score": 0
+      },
+      {
+         "username": "SAA",
+         "high_score": 0
+      },
+      {
+         "username": " AWWWE",
+         "high_score": 0
+      },
+      {
+         "username": "A",
+         "high_score": 10770.08
+      },
+      {
+         "username": "AWWQ",
+         "high_score": 10756.74
+      },
+      {
+         "username": " ARAWW",
+         "high_score": 10741
+      }
+   ]
 }
