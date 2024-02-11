@@ -164,7 +164,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
             heartbeat.play()
             global alpha_counter
             alpha_counter += 1
-            if alpha_counter<=250:
+            if alpha_counter<255:
                 #increase the brightness of the screen until it is fully white
                 increase_brightness(gameDisplay,alpha_counter)
             else: 
@@ -181,7 +181,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
         display_pause_menu(gameDisplay,getattr(player1,"current_score"),getattr(player1,"high_score"))
     
     elif gamestate == "loss":
-        check_score(getattr(player1,"name"),int(getattr(player1,"current_score") - 2000),getattr(player1,"high_score"))
+        check_score(getattr(player1,"name"),int(getattr(player1,"current_score") - 2000),getattr(player1,"high_score")) 
         loss_screen(gameDisplay,getattr(player1,"current_score"))
 
     elif gamestate == "win":

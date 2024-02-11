@@ -184,19 +184,27 @@ def display_pause_menu(gd,score, high_score):
     display_text(white,600,385,str(int(high_score)),arcade_font)
 
 def check_score(name,new_score,high_score):
+    #load a copy of the JSON file containing scores
     file = load_name_score()
+    
+    #update scores in the "file" variable
     if new_score > high_score:
         for x in file["users"]:
             if x["username"] == name.upper():
                 x["high_score"] = int(new_score)
+    
+    #ammend these changes into the name_score.json file
     with open('name_score.json', 'w') as output_file:
         json.dump(file, output_file, indent=3)
 
 def increase_brightness(gd,counter):
+    #a surface is created and the game_over image is drawn over it
     fade = pygame.Surface((1000,1000))
     fade.blit(game_over,(0,0))
-    #fade.fill((255,255,255))
-    fade.set_alpha(counter)
+
+    #changes the transparency of the fade surface to the counter parameter
+    fade.set_alpha(counter) 
+    #draws the surface "fade" onto the game display
     gd.blit(fade,(0,0))
 
 def loss_screen(gd,score):
