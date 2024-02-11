@@ -104,7 +104,16 @@ global alpha_counter
 alpha_counter = 0
 
 #heartbeat sound
-heartbeat = pygame.mixer.Sound('Stages/Stage 7/sounds/heartbeat.mp3')
+loss_sound = pygame.mixer.Sound('Stages/Stage 7/sounds/game_over.wav')
 
 #game over photo
 game_over = pygame.image.load('Stages/Stage 7/images/Gameover.png')
+
+#loss sound
+global sound_play
+sound_play = False
+
+#win
+global win_counter,win_sound
+win_counter = 0
+win_sound = pygame.mixer.Sound('Stages/Stage 8/sounds/win_sound.mp3')

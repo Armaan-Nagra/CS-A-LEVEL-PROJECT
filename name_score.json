@@ -22,7 +22,7 @@
       },
       {
          "username": "AA",
-         "high_score": 6506
+         "high_score": 10683
       },
       {
          "username": " S",
@@ -34,7 +34,7 @@
       },
       {
          "username": "SS",
-         "high_score": 0
+         "high_score": 10770
       },
       {
          "username": "SDD",
@@ -82,7 +82,7 @@
       },
       {
          "username": " AA",
-         "high_score": 6697
+         "high_score": 10746
       },
       {
          "username": " ADMIN",
@@ -127,6 +127,18 @@
       {
          "username": "DD",
          "high_score": 5176
+      },
+      {
+         "username": " A",
+         "high_score": 0
+      },
+      {
+         "username": "SSS",
+         "high_score": 0
+      },
+      {
+         "username": "AADD",
+         "high_score": 10765
       }
    ]
 }

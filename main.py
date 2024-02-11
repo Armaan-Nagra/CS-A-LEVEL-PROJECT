@@ -108,7 +108,14 @@ while gamestate != "end": #loops until the user wants to exit the game.
 
         #if all soldiers are killed, player wins
         if no_soldiers == True and first_soldier.get_tanks_left() == 0:
-            gamestate = "win"
+            global win_counter, win_sound,sound_play
+            if sound_play == False:
+                win_sound.play()
+                sound_play = True
+            if win_counter <= 450:
+                win_counter += 1
+            else:
+                gamestate = "win"
 
         #display the background
         gameDisplay.fill(white)
@@ -160,17 +167,19 @@ while gamestate != "end": #loops until the user wants to exit the game.
 
         #if player has no health, game is over
         if getattr(player1,'health') <= 0:
-            #play dying heartbeat sound
-            heartbeat.play()
+            #play game over sound
             global alpha_counter
             alpha_counter += 1
+            if sound_play == False:
+                loss_sound.play()
+                sound_play = True
             if alpha_counter<255:
                 #increase the brightness of the screen until it is fully white
                 increase_brightness(gameDisplay,alpha_counter)
             else: 
                 #change gamestate variable to "loss"
                 gamestate = "loss"
-                heartbeat.stop() #stop the heartbeat sound
+                loss_sound.stop() #stop the sound
         
     elif gamestate == "pause":
         if events["enter"] == 1:
@@ -187,7 +196,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
     elif gamestate == "win":
         #play_animation() 
         check_score(getattr(player1,"name"),getattr(player1,"current_score"),getattr(player1,"high_score"))
-        #*Win_screen()
+        #Win_screen()
   
     pygame.display.update()# this line updates the display so that when a change happens in the loop it is displayed.
     clock.tick(120)
