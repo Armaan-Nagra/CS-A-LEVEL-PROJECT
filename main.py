@@ -100,10 +100,6 @@ while gamestate != "end": #loops until the user wants to exit the game.
             timer.pause()
             gamestate = "pause"
 
-        #if player has no health, game is over
-        if getattr(player1,'health') <= 0:
-            gamestate = "loss"
-
         #I find the first soldier from the soldiers group if there is any 
         try:
             first_soldier = soldiers.sprites()[0]
@@ -162,6 +158,20 @@ while gamestate != "end": #loops until the user wants to exit the game.
         #calculate the player's score
         player1.calculate_score(getattr(gun,'bullets'),timer.get_elapsed_time(),enemy_soldier.get_soldiers_killed(),enemy_tank.get_tanks_shot())
 
+        #if player has no health, game is over
+        if getattr(player1,'health') <= 0:
+            #play dying heartbeat sound
+            heartbeat.play()
+            global alpha_counter
+            alpha_counter += 1
+            if alpha_counter<=250:
+                #increase the brightness of the screen until it is fully white
+                increase_brightness(gameDisplay,alpha_counter)
+            else: 
+                #change gamestate variable to "loss"
+                gamestate = "loss"
+                heartbeat.stop() #stop the heartbeat sound
+        
     elif gamestate == "pause":
         if events["enter"] == 1:
             timer.resume()
@@ -171,14 +181,13 @@ while gamestate != "end": #loops until the user wants to exit the game.
         display_pause_menu(gameDisplay,getattr(player1,"current_score"),getattr(player1,"high_score"))
     
     elif gamestate == "loss":
-        #play_animation()
         check_score(getattr(player1,"name"),int(getattr(player1,"current_score") - 2000),getattr(player1,"high_score"))
-        #loss_screen()
+        loss_screen(gameDisplay,getattr(player1,"current_score"))
 
     elif gamestate == "win":
         #play_animation() 
         check_score(getattr(player1,"name"),getattr(player1,"current_score"),getattr(player1,"high_score"))
-        Win_screen()
+        #*Win_screen()
   
     pygame.display.update()# this line updates the display so that when a change happens in the loop it is displayed.
     clock.tick(120)

@@ -63,8 +63,6 @@ run1 = pygame.image.load('Stages/Stage 5/photos/INGAME/run1.png')
 run2 = pygame.image.load('Stages/Stage 5/photos/INGAME/run2.png')
 white_shoot = pygame.image.load('Stages/Stage 5/photos/INGAME/white shoot.png')
 soldier_headshot = pygame.image.load('Stages/Stage 5/photos/INGAME/soldier_headshot.png')
-#load spritesheet
-#soldier_spritesheet = pygame.image.load("Stages/Stage 5/photos/INGAME/invSpritesheet.png")
 
 #load tanks
 tank_white = pygame.image.load('Stages/Stage 5/photos/INGAME/tank shoot.png')
@@ -100,3 +98,13 @@ last_stamp = 0
 
 #pause menu
 pause_menu = pygame.image.load('Stages/Stage 6/images/pause_menu.png')
+
+#increasing brightness
+global alpha_counter
+alpha_counter = 0
+
+#heartbeat sound
+heartbeat = pygame.mixer.Sound('Stages/Stage 7/sounds/heartbeat.mp3')
+
+#game over photo
+game_over = pygame.image.load('Stages/Stage 7/images/Gameover.png')

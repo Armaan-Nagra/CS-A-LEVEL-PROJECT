@@ -191,3 +191,14 @@ def check_score(name,new_score,high_score):
                 x["high_score"] = int(new_score)
     with open('name_score.json', 'w') as output_file:
         json.dump(file, output_file, indent=3)
+
+def increase_brightness(gd,counter):
+    fade = pygame.Surface((1000,1000))
+    fade.blit(game_over,(0,0))
+    #fade.fill((255,255,255))
+    fade.set_alpha(counter)
+    gd.blit(fade,(0,0))
+
+def loss_screen(gd,score):
+    gd.blit(game_over,(0,0))
+    display_text(black,650,450,str(int(score)),pygame.font.Font("Stages/Stage 2/pixel.ttf", 65))
