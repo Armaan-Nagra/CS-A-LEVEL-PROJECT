@@ -186,7 +186,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
                 #change game state to win
                 gamestate = "win"
                 
-
+ 
         #if player has no health, game is over
         if getattr(player1,'health') <= 0:
             #play game over sound
@@ -199,11 +199,11 @@ while gamestate != "end": #loops until the user wants to exit the game.
                 #increase the brightness of the screen until it is fully white
                 increase_brightness(gameDisplay,alpha_counter)
             else: 
+                gameDisplay.blit(game_over,(0,0))
                 #change gamestate variable to "loss"
                 gamestate = "loss"
                 loss_sound.stop() #stop the sound
         
-        print(getattr(player1,'health'))
         
     elif gamestate == "pause":
         if events["enter"] == 1:
@@ -218,7 +218,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
         loss_screen(gameDisplay,getattr(player1,"current_score"))
 
     elif gamestate == "win":
-        global win_screen_counter
+        global win_screen_image
         win_screen_counter += 1
         check_score(getattr(player1,"name"),getattr(player1,"current_score"),getattr(player1,"high_score"))
         win_screen(gameDisplay,getattr(player1,"current_score"),getattr(player1,"high_score"),win_screen_counter)
