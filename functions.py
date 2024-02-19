@@ -210,3 +210,25 @@ def increase_brightness(gd,counter):
 def loss_screen(gd,score):
     gd.blit(game_over,(0,0))
     display_text(black,650,450,str(int(score)),pygame.font.Font("Stages/Stage 2/pixel.ttf", 65))
+
+def winning_fading(gd,counter):
+    #create a fade surface
+    fade = pygame.Surface((1000,1000))
+    #draw the winning image onto the surface
+    fade.blit(winning_image,(0,0))
+    #change opacity of the surface
+    fade.set_alpha(counter-150)
+    #draw surface onto screen
+    gd.blit(fade,(0,0))
+
+def win_screen(gd,score,high_score,counter):
+    #draw the winning image and mission completed stamp onto the screen
+    gd.blit(winning_image,(0,0))
+    gd.blit(mission_completed,(0,0))
+    #once some time has passed and counter is greater than or equal to 100
+    if counter >= 100:
+        #draw the win_screen_image containing scoring onto the screen
+        gd.blit(win_screen_image,(0,0))
+        #display the appropriate scores
+        display_text(black,580,350,str(int(score)),pygame.font.Font("Stages/Stage 2/pixel.ttf", 35))
+        display_text(black,580,511,str(int(score)),pygame.font.Font("Stages/Stage 2/pixel.ttf", 35))

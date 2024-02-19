@@ -114,6 +114,11 @@ global sound_play
 sound_play = False
 
 #win
-global win_counter,win_sound
+global win_counter,win_sound,win_screen_counter
 win_counter = 0
 win_sound = pygame.mixer.Sound('Stages/Stage 8/sounds/win_sound.mp3')
+winning_image = pygame.image.load('Stages/Stage 8/images/saving_monkey.png')
+mission_completed = pygame.image.load('Stages/Stage 8/images/mission_completed.png')
+stamp = pygame.mixer.Sound("Stages/Stage 8/sounds/stamp.mp3")
+win_screen_image = pygame.image.load('Stages/Stage 8/images/mission_passed.png')
+win_screen_counter = 0

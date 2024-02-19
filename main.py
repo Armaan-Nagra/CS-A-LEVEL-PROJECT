@@ -107,15 +107,17 @@ while gamestate != "end": #loops until the user wants to exit the game.
             no_soldiers = True
 
         #if all soldiers are killed, player wins
-        if no_soldiers == True and first_soldier.get_tanks_left() == 0:
-            global win_counter, win_sound,sound_play
-            if sound_play == False:
-                win_sound.play()
-                sound_play = True
-            if win_counter <= 450:
-                win_counter += 1
-            else:
-                gamestate = "win"
+        # if no_soldiers == True and first_soldier.get_tanks_left() == 0:
+        #     global win_counter, win_sound,sound_play
+        #     if sound_play == False:
+        #         win_sound.play()
+        #         sound_play = True
+        #     if win_counter <= 450:
+        #         win_counter += 1
+        #     if win_counter >= 50:
+        #         pass
+        #     else:
+        #         gamestate = "win"
 
         #display the background
         gameDisplay.fill(white)
@@ -165,6 +167,26 @@ while gamestate != "end": #loops until the user wants to exit the game.
         #calculate the player's score
         player1.calculate_score(getattr(gun,'bullets'),timer.get_elapsed_time(),enemy_soldier.get_soldiers_killed(),enemy_tank.get_tanks_shot())
 
+
+        if no_soldiers == True and first_soldier.get_tanks_left() == 0:
+            global win_counter, win_sound,sound_play
+            win_counter += 1
+            #play game winning sound
+            if sound_play == False:
+                win_sound.play()
+                sound_play = True
+            if win_counter>150 and win_counter<450:
+                #Fade the winning screen in
+                winning_fading(gameDisplay,win_counter)            
+            if win_counter>=450:
+                #draw the winning image onto the screen
+                gameDisplay.blit(winning_image,(0,0)) 
+                #play the stamp sound
+                stamp.play()
+                #change game state to win
+                gamestate = "win"
+                
+
         #if player has no health, game is over
         if getattr(player1,'health') <= 0:
             #play game over sound
@@ -181,11 +203,13 @@ while gamestate != "end": #loops until the user wants to exit the game.
                 gamestate = "loss"
                 loss_sound.stop() #stop the sound
         
+        print(getattr(player1,'health'))
+        
     elif gamestate == "pause":
         if events["enter"] == 1:
             timer.resume()
             gamestate = "play"
-
+ 
         #display the pause menu with scores information
         display_pause_menu(gameDisplay,getattr(player1,"current_score"),getattr(player1,"high_score"))
     
@@ -194,9 +218,11 @@ while gamestate != "end": #loops until the user wants to exit the game.
         loss_screen(gameDisplay,getattr(player1,"current_score"))
 
     elif gamestate == "win":
-        #play_animation() 
+        global win_screen_counter
+        win_screen_counter += 1
         check_score(getattr(player1,"name"),getattr(player1,"current_score"),getattr(player1,"high_score"))
-        #Win_screen()
+        win_screen(gameDisplay,getattr(player1,"current_score"),getattr(player1,"high_score"),win_screen_counter)
+
   
     pygame.display.update()# this line updates the display so that when a change happens in the loop it is displayed.
     clock.tick(120)
