@@ -29,7 +29,7 @@ class powerups():
         for powerup in self.powerups_list:
             if powerup == soldiers and self.moving==False:
                 #choose a random power up
-                self.type = random.choice(["health","ammo","damage"])
+                self.type = "damage"#random.choice(["health","ammo","damage"])
                 #removes the random integer from the list so that multiple power ups are not spawned
                 self.powerups_list.remove(powerup)
                 #flag is turned on to spawn the power up
@@ -128,3 +128,19 @@ class powerups():
         #surface drawn onto game display
         self.gd.blit(temp, (self.message_x,self.message_y))
         
+    def reset_powerups(self): 
+        self.x = random.randint(800,1100)
+        self.y = -100
+        self.first = random.randint(30,40)
+        self.second = random.randint(10,29) 
+        self.third = random.randint(1,9) 
+        self.powerups_list = [self.first,self.second,self.third]
+        self.opacity = 300
+        self.moving = False
+        self.shot = False
+        self.message_x = 0
+        self.message_y = 0
+        self.message_photo = None
+        self.show_message = False
+        self.type = None 
+        self.size = None

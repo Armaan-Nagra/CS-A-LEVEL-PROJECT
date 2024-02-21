@@ -26,3 +26,9 @@ class PausableTimer:
             return self.paused_time
         else:
             return pygame.time.get_ticks() - self.start_time
+    
+    def reset_timer(self):
+        self.start_time = 0
+        self.paused_time = 0
+        self.is_paused = False
+        self.started = False

@@ -122,3 +122,7 @@ mission_completed = pygame.image.load('Stages/Stage 8/images/mission_completed.p
 stamp = pygame.mixer.Sound("Stages/Stage 8/sounds/stamp.mp3")
 win_screen_image = pygame.image.load('Stages/Stage 8/images/mission_passed.png')
 win_screen_counter = 0
+
+global soldiers,tanks
+soldiers = pygame.sprite.Group()
+tanks = pygame.sprite.Group()

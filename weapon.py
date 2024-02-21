@@ -74,7 +74,19 @@ class weapon(pygame.sprite.Sprite):
         self.more_damage_active = True
         self.font_colour = font_colour
         self.sound = sound
-        
+    
+    def reset_weapon(self):
+        self.current_bullets = 0
+        if self.type == "uzi":
+            self.bullets = 100
+            self.uzi_damage = 100
+            self.font_colour = black
+            self.sound = gunshot_sound
+        if self.type == "grenade":
+            self.bullets = 5
+            self.sound = grenade_sound
+        self.last_shot = 0
+        self.more_damage_active = False
             
 
 

@@ -192,3 +192,10 @@ class enemy(pygame.sprite.Sprite):
             self.stop2_passed = False
             self.stop1_time = None
             self.stop2_time = None    
+
+    def reset_enemies(self):
+        global soldiers_killed,soldiers_left,tanks_shot,tanks_left
+        soldiers_killed = 0 
+        tanks_shot = 0
+        tanks_left = 5
+        soldiers_left = 40

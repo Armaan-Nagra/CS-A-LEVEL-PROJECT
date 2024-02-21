@@ -32,23 +32,7 @@ tank_spritesheet.append(tank_shoot)
 tank_spritesheet.append(tank_white) 
 
 
-soldiers = pygame.sprite.Group()
-tanks = pygame.sprite.Group()
-for x in range(5):  
-    direction = random.getrandbits(1)
-    if direction == 1:
-        enemy_soldier = enemy(random.randint(-1000,-150),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200,-0.5)
-    else:
-        enemy_soldier = enemy(random.randint(1000,2000),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200,-0.5)
-    soldiers.add(enemy_soldier) 
-
-direction = random.getrandbits(1)
-# direction = 0
-if direction == 1:
-    enemy_tank = enemy(random.randint(-1000,-250),random.randint(250,600),500,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200,-1)
-else:
-    enemy_tank = enemy(random.randint(1000,2000),random.randint(250,600),500,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200,-1)
-tanks.add(enemy_tank) 
+spawn_initial_enemies(soldier_spritesheet,tank_spritesheet,player1,soldier_spritesheet,tank_spritesheet)
 
 gamestate = "start"
 while gamestate != "end": #loops until the user wants to exit the game.
@@ -106,19 +90,6 @@ while gamestate != "end": #loops until the user wants to exit the game.
         except:
             no_soldiers = True
 
-        #if all soldiers are killed, player wins
-        # if no_soldiers == True and first_soldier.get_tanks_left() == 0:
-        #     global win_counter, win_sound,sound_play
-        #     if sound_play == False:
-        #         win_sound.play()
-        #         sound_play = True
-        #     if win_counter <= 450:
-        #         win_counter += 1
-        #     if win_counter >= 50:
-        #         pass
-        #     else:
-        #         gamestate = "win"
-
         #display the background
         gameDisplay.fill(white)
         scroll_background(gameDisplay)
@@ -165,8 +136,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
         show_tanks(first_soldier.get_tanks_left(),tank_small,170,820,gameDisplay)
 
         #calculate the player's score
-        player1.calculate_score(getattr(gun,'bullets'),timer.get_elapsed_time(),enemy_soldier.get_soldiers_killed(),enemy_tank.get_tanks_shot())
-
+        #player1.calculate_score(getattr(gun,'bullets'),timer.get_elapsed_time(),soldiers.sprites()[0].get_soldiers_killed(),soldiers.sprites()[0].get_tanks_shot())
 
         if no_soldiers == True and first_soldier.get_tanks_left() == 0:
             global win_counter, win_sound,sound_play
@@ -183,10 +153,13 @@ while gamestate != "end": #loops until the user wants to exit the game.
                 gameDisplay.blit(winning_image,(0,0)) 
                 #play the stamp sound
                 stamp.play()
+                win_counter = 0
+                sound_play = False
+                max_soldiers = 5
+                no_soldiers = False
                 #change game state to win
                 gamestate = "win"
                 
- 
         #if player has no health, game is over
         if getattr(player1,'health') <= 0:
             #play game over sound
@@ -200,11 +173,19 @@ while gamestate != "end": #loops until the user wants to exit the game.
                 increase_brightness(gameDisplay,alpha_counter)
             else: 
                 gameDisplay.blit(game_over,(0,0))
+                alpha_counter = 0
+                sound_play = False
                 #change gamestate variable to "loss"
+                max_soldiers = 5
                 gamestate = "loss"
-                loss_sound.stop() #stop the sound
+
+        #calculate the player's score
+        try:
+            player1.calculate_score(getattr(gun,'bullets'),timer.get_elapsed_time(),soldiers.sprites()[0].get_soldiers_killed(),soldiers.sprites()[0].get_tanks_shot())
+        except:
+            pass
         
-        
+
     elif gamestate == "pause":
         if events["enter"] == 1:
             timer.resume()
@@ -216,12 +197,19 @@ while gamestate != "end": #loops until the user wants to exit the game.
     elif gamestate == "loss":
         check_score(getattr(player1,"name"),int(getattr(player1,"current_score") - 2000),getattr(player1,"high_score")) 
         loss_screen(gameDisplay,getattr(player1,"current_score"))
+        if events["space"]:
+            gamestate = "menu"
+            reset_level(player1,timer,gun,grenade,soldiers,tanks,soldier_spritesheet,tank_spritesheet,first_soldier,powerups)
 
     elif gamestate == "win":
-        global win_screen_image
+        global win_screen_image,win_screen_counter
         win_screen_counter += 1
         check_score(getattr(player1,"name"),getattr(player1,"current_score"),getattr(player1,"high_score"))
         win_screen(gameDisplay,getattr(player1,"current_score"),getattr(player1,"high_score"),win_screen_counter)
+        if events["space"]:
+            win_screen_counter = 0
+            gamestate = "menu"
+            reset_level(player1,timer,gun,grenade,soldiers,tanks,soldier_spritesheet,tank_spritesheet,first_soldier,powerups)
 
   
     pygame.display.update()# this line updates the display so that when a change happens in the loop it is displayed.

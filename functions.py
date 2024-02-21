@@ -1,6 +1,8 @@
 import pygame
 from settings import *
 import json
+import random
+from enemy import *
 #from button import *
 pygame.init()
 def initialise_pygame_display():
@@ -177,6 +179,22 @@ def show_tanks(tank_count,tank_photo,x,y,gd):
       gd.blit(tank_photo, (x,y))
       display_text(black,x+45,y+90,str(tank_count),level_font)
 
+def spawn_initial_enemies(soldier_spritesheet,tank_spritesheet,player1,s_spritesheet,t_spritesheet):
+    for x in range(5):  
+        direction = random.getrandbits(1)
+        if direction == 1:
+            enemy_soldier = enemy(random.randint(-1000,-150),random.randint(250,600),100,s_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200,-0.5)
+        else:
+            enemy_soldier = enemy(random.randint(1000,2000),random.randint(250,600),100,s_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200,-0.5)
+        soldiers.add(enemy_soldier) 
+
+    direction = random.getrandbits(1)
+    if direction == 1:
+        enemy_tank = enemy(random.randint(-1000,-250),random.randint(250,600),500,t_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200,-1)
+    else:
+        enemy_tank = enemy(random.randint(1000,2000),random.randint(250,600),500,t_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200,-1)
+    tanks.add(enemy_tank) 
+
 
 def display_pause_menu(gd,score, high_score):
     gd.blit(pause_menu,(100,150))
@@ -232,3 +250,22 @@ def win_screen(gd,score,high_score,counter):
         #display the appropriate scores
         display_text(black,580,350,str(int(score)),pygame.font.Font("Stages/Stage 2/pixel.ttf", 35))
         display_text(black,580,511,str(int(score)),pygame.font.Font("Stages/Stage 2/pixel.ttf", 35))
+
+def reset_level(player,timer,uzi,grenade,soldiers,tanks,soldier_spritesheet,tank_spritesheet,first_soldier,powerup):
+    pygame.mouse.set_visible(True)
+
+    powerup.reset_powerups()
+
+    player.reset_player()
+
+    timer.reset_timer()
+
+    uzi.reset_weapon()
+
+    grenade.reset_weapon()
+
+    first_soldier.reset_enemies()
+    tanks.empty()
+    soldiers.empty()
+    spawn_initial_enemies(soldiers,tanks,player,soldier_spritesheet,tank_spritesheet)
+
