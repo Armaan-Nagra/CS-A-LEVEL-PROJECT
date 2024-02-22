@@ -76,12 +76,15 @@ class weapon(pygame.sprite.Sprite):
         self.sound = sound
     
     def reset_weapon(self):
+        #reset the "copy" of the bullets taken when powerup used
         self.current_bullets = 0
+        #reset the damage, bullets, colour and sound of the uzi gun
         if self.type == "uzi":
             self.bullets = 100
             self.uzi_damage = 100
             self.font_colour = black
             self.sound = gunshot_sound
+        #reset the amount of bullets and sound of grenade
         if self.type == "grenade":
             self.bullets = 5
             self.sound = grenade_sound

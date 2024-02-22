@@ -215,6 +215,12 @@ def check_score(name,new_score,high_score):
     with open('name_score.json', 'w') as output_file:
         json.dump(file, output_file, indent=3)
 
+def return_high_score(name):
+    file = load_name_score()
+    for x in file["users"]:
+        if x["username"] == name.upper():
+            return(x["high_score"])     
+
 def increase_brightness(gd,counter):
     #a surface is created and the game_over image is drawn over it
     fade = pygame.Surface((1000,1000))
@@ -252,20 +258,22 @@ def win_screen(gd,score,high_score,counter):
         display_text(black,580,511,str(int(score)),pygame.font.Font("Stages/Stage 2/pixel.ttf", 35))
 
 def reset_level(player,timer,uzi,grenade,soldiers,tanks,soldier_spritesheet,tank_spritesheet,first_soldier,powerup):
+    #make the cursor visible 
     pygame.mouse.set_visible(True)
-
+    #reset the powerups options
     powerup.reset_powerups()
-
+    #reset the player options
     player.reset_player()
-
+    #reset the timer
     timer.reset_timer()
-
+    #reset the uzi 
     uzi.reset_weapon()
-
+    #reset the grenades
     grenade.reset_weapon()
-
+    #reset the enemies
     first_soldier.reset_enemies()
     tanks.empty()
     soldiers.empty()
+    #spawns the enemies again randomly 
     spawn_initial_enemies(soldiers,tanks,player,soldier_spritesheet,tank_spritesheet)
 

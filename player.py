@@ -26,8 +26,10 @@ class player():
 
     def calculate_score(self,ammo,timer,soldiers_killed,tanks_shot):
         # global soldiers_killed,tanks_shot
+        self.high_score = return_high_score(self.name)
         self.current_score = 500 + (200*soldiers_killed) + (500*tanks_shot) - ((100-self.health)+(100-ammo)) - (timer * 0.01)
 	    #self.current_score = 500 + (200*soldier_killed)+(500*tanks_shot)-((100-self.health)+(100-ammo)) - (timer*0.01)
 
     def reset_player(self):
         self.health = 100
+        self.current_score = 0

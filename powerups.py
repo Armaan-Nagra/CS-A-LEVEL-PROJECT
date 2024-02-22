@@ -29,7 +29,7 @@ class powerups():
         for powerup in self.powerups_list:
             if powerup == soldiers and self.moving==False:
                 #choose a random power up
-                self.type = "damage"#random.choice(["health","ammo","damage"])
+                self.type = random.choice(["health","ammo","damage"])
                 #removes the random integer from the list so that multiple power ups are not spawned
                 self.powerups_list.remove(powerup)
                 #flag is turned on to spawn the power up

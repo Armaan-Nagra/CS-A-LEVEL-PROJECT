@@ -185,7 +185,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
         except:
             pass
         
-
+        print(getattr(player1,"current_score"),getattr(player1,"high_score"))
     elif gamestate == "pause":
         if events["enter"] == 1:
             timer.resume()
@@ -195,7 +195,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
         display_pause_menu(gameDisplay,getattr(player1,"current_score"),getattr(player1,"high_score"))
     
     elif gamestate == "loss":
-        check_score(getattr(player1,"name"),int(getattr(player1,"current_score") - 2000),getattr(player1,"high_score")) 
+        check_score(getattr(player1,"name"),int(getattr(player1,"current_score")),getattr(player1,"high_score")) 
         loss_screen(gameDisplay,getattr(player1,"current_score"))
         if events["space"]:
             gamestate = "menu"
