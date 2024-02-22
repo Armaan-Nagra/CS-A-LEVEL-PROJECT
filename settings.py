@@ -43,7 +43,7 @@ scroll_speed = 0.5
 background_x = 0
 
 #soldiers
-global max_soldiers, soldiers_killed, soldiers_left
+global max_soldiers, soldiers_killed, soldiers_left, no_soldiers
 
 soldiers = pygame.sprite.Group()
 

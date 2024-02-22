@@ -231,7 +231,7 @@ def increase_brightness(gd,counter):
     #draws the surface "fade" onto the game display
     gd.blit(fade,(0,0))
 
-def loss_screen(gd,score):
+def display_loss_screen(gd,score):
     gd.blit(game_over,(0,0))
     display_text(black,650,450,str(int(score)),pygame.font.Font("Stages/Stage 2/arcade_font.ttf", 65))
 
@@ -257,7 +257,7 @@ def win_screen(gd,score,high_score,counter):
         display_text(black,580,350,str(int(score)),pygame.font.Font("Stages/Stage 2/arcade_font.ttf", 35))
         display_text(black,580,511,str(int(score)),pygame.font.Font("Stages/Stage 2/arcade_font.ttf", 35))
 
-def reset_level(player,timer,uzi,grenade,soldiers,tanks,soldier_spritesheet,tank_spritesheet,first_soldier,powerup):
+def reset_level(player,timer,uzi,grenade,soldiers,tanks,first_soldier,powerup):
     #make the cursor visible 
     pygame.mouse.set_visible(True)
     #reset the powerups options
@@ -330,3 +330,72 @@ def add_tanks_to_screen(tanks,max_tanks,first_soldier,player):
         else:
             enemy_tank = enemy(random.randint(1000,2000),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player,"tank",320,200,-1)
         tanks.add(enemy_tank) 
+
+def check_win(no_soldiers,first_soldier,player, gd, gamestate):
+    global win_counter, win_sound,sound_play, max_soldiers
+    if no_soldiers == True and first_soldier.get_tanks_left() == 0:
+        win_counter += 1
+        #play game winning sound
+        if sound_play == False:
+            win_sound.play()
+            sound_play = True
+            return True, "play"
+        if win_counter>150 and win_counter<450:
+            #Fade the winning screen in
+            winning_fading(gd,win_counter)    
+            return True, "play"
+        if win_counter>=449:
+            #draw the winning image onto the screen
+            gd.blit(winning_image,(0,0)) 
+            #play the stamp sound
+            stamp.play()
+            win_counter = 0
+            sound_play = False
+            max_soldiers = 5
+            no_soldiers = False
+            #change game state to win
+            return False,"win"
+        else:
+            return False, "play"
+    else:
+        return False, "play"
+
+def check_loss(player,gd):
+    if getattr(player,'health') <= 0:
+        #play game over sound
+        global alpha_counter,sound_play, max_soldiers
+        alpha_counter += 1
+        if sound_play == False:
+            loss_sound.play()
+            sound_play = True
+        if alpha_counter<255:
+            #increase the brightness of the screen until it is fully white
+            increase_brightness(gd,alpha_counter)
+        else: 
+            gd.blit(game_over,(0,0))
+            alpha_counter = 0
+            sound_play = False
+            #change gamestate variable to "loss"
+            max_soldiers = 5
+            return "loss"
+    return "play"
+
+def resume(events,timer):
+    if events["enter"] == 1:
+        timer.resume()
+        return "play"   
+    else:
+        return "pause"
+
+def play_again(events,player,timer,gun,grenade,soldiers,tanks,first_soldier,powerups,current_screen,win_screen_counter):
+    if events["space"]:
+        reset_level(player,timer,gun,grenade,soldiers,tanks,first_soldier,powerups)
+        if current_screen == "loss":
+            return "menu"
+        if current_screen == "win":
+            return "menu", 0
+    else:
+        if current_screen == "loss":
+            return "loss"
+        if current_screen == "win":
+            return "win", win_screen_counter

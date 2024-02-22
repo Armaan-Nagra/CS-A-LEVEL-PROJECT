@@ -80,7 +80,7 @@ class weapon(pygame.sprite.Sprite):
         self.current_bullets = 0
         #reset the damage, bullets, colour and sound of the uzi gun
         if self.type == "uzi":
-            self.bullets = 100
+            self.bullets = 101
             self.uzi_damage = 100
             self.font_colour = black
             self.sound = gunshot_sound
