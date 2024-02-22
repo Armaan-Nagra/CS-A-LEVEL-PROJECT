@@ -36,7 +36,7 @@ while gamestate != "end": # loops until the user wants to exit the game.
         play_music(background_music) # play_music function is called which creates the background music 
         draw_cover(main_background) # this function draws the cover of the game onto the screen
         gamestate = can_proceed(events) # this function returns whether the display should proceed onto the next screesn by listening for space key    
-
+    
 
     elif gamestate == "name":
         draw_messages_and_title(gameDisplay)
