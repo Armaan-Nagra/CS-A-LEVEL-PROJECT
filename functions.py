@@ -3,26 +3,29 @@ from settings import *
 import json
 import random
 from enemy import *
-#from button import *
+
 pygame.init()
+
 def initialise_pygame_display():
-    global width, height, clock, gameDisplay # makes variables global so that they can be accessed elsewhere
+    global screen_width, screen_height, clock, gameDisplay # makes variables global so that they can be accessed elsewhere
     pygame.init() #initialises pygame library
     pygame.font.init()
     pygame.mixer.init()# initialises sound
     pygame.display.set_caption("Operation Monkey")
     # below, size of display is set as 2 variables
-    width = 1000
-    height = 1000
-    gameDisplay = pygame.display.set_mode((width, height)) # display is created
+    screen_width = 1000
+    screen_height = 1000
+    gameDisplay = pygame.display.set_mode((screen_width, screen_height)) # display is created
     clock = pygame.time.Clock() # variable clock is an object which keeps track of time
-    return width, height, gameDisplay, clock
+    return screen_width, screen_height, gameDisplay, clock
 
-def can_proceed(events):
+
+def name_to_start(events):
     if events["space"] == 1:
         return "name"
     else:
         return "start"
+
 
 def play_music(music):
     if not pygame.mixer.get_busy():
@@ -31,11 +34,12 @@ def play_music(music):
 
 def draw_cover(picture):
     gameDisplay.blit(picture,(0,0))
-    
+
+
 def draw_messages_and_title(gameDisplay):
     gameDisplay.fill(white)
     title = arcade_font.render("OPERATION MONKEY", False, black)
-    gameDisplay.blit(title, (width // 2 - title.get_width() // 2, 50))
+    gameDisplay.blit(title, (screen_width // 2 - title.get_width() // 2, 50))
     gameDisplay.blit(message1, (0,200))
     gameDisplay.blit(message2, (0,425))
 
@@ -46,6 +50,7 @@ def ask_name(gameDisplay,events):
     if events["left-click"] == 1:
         if input_rect.collidepoint((events["x"],events["y"])):
             inside_input_box = True # if the user clicks on the input box the variable is set to true
+    
     if events["key-down"] == 1:
         if inside_input_box:
             now = pygame.time.get_ticks()
@@ -59,7 +64,7 @@ def ask_name(gameDisplay,events):
                     
     if inside_input_box:
         colour = red
-        outline = 5 # if user clicks on input box it changes colour and outline width
+        outline = 5 # if user clicks on input box it changes the colour and width of the border
     else:
         colour = black
         outline = 2 # if he does not, it remains the same
@@ -72,28 +77,19 @@ def ask_name(gameDisplay,events):
     
     return name_placeholder
 
+
 def display_text(colour, x, y, message, font):
     message = font.render(message, False, colour)
     gameDisplay.blit(message, (x, y))
-    
-def load_name_score():
-    try:
-        with open('name_score.json', 'r') as file:
-            return json.load(file)
-    except FileNotFoundError:
-        return {}
 
 
+def display_menu_texts():
+    gameDisplay.fill(black)
+    display_text(white,207,50,"OPERATION MONKEY",arcade_font)
+    display_text(red,600,900,"PRESS ESC TO EXIT",pygame.font.Font(None,50))
 
-def display_name_score(name):
-    file = load_name_score()
-    for x in file["users"]:
-        if x["username"] == name.upper():
-            high_score = x["high_score"]
-    display_text(white,15,175,"Name: "+name,name_score_font)
-    display_text(white,15,225,"High Score: "+str(high_score),name_score_font)
 
-    
+#mechanism to make sure that the player does not break the game by pressing two buttons at the same time
 def precedence(first_button,second_button,current):
     if first_button!= current and second_button == current:
         return first_button
@@ -102,29 +98,24 @@ def precedence(first_button,second_button,current):
     else:
         return current
 
-def display_menu_texts():
-    gameDisplay.fill(black)
-    display_text(white,207,50,"OPERATION MONKEY",arcade_font)
-    display_text(red,600,900,"PRESS ESC TO EXIT",pygame.font.Font(None,50))
-    
-def display_leaderboard():
-    gameDisplay.fill(black)
-    display_text(yellow, 230,50,"LEADERBOARD",pygame.font.Font("Stages/Stage 2/arcade_font.ttf", 50))
 
-    positions = calculate_positions() # functions returns the top 3 scores as dictionary objects
-
-    if positions == "invalid":
-        display_text(red, 200,400 , "NOT ENOUGH DATA", leaderboard_font)
-    else:
-        display_text(white, 250, 250, "NAME", leaderboard_font) 
-        display_text(white, 750, 250, "SCORE", leaderboard_font)
-        for x in range(3): # loops 3 times to display the names and high_scores
-            display_text(white, 50, 350+(100*x),(str(x+1)+".       "+ positions[x]["username"]), leaderboard_font)
-            display_text(white, 750, 350+(100*x), str(positions[x]["high_score"]), leaderboard_font)
-        
-        
+def load_name_score(): #load the json file into a dictionary
+    try:
+        with open('name_score.json', 'r') as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return {}
 
 
+def display_name_score(name):
+    file = load_name_score() #store the JSON file into a dictionary of name "file"
+    #iterate through the users and find the name of the player and copy their high score into the variable "high_score"
+    for x in file["users"]:
+        if x["username"] == name.upper():
+            high_score = x["high_score"]
+    #draw the name and high_score of the player
+    display_text(white,15,175,"Name: "+name,name_score_font)
+    display_text(white,15,225,"High Score: "+str(high_score),name_score_font)
 
 
 def calculate_positions():
@@ -132,15 +123,15 @@ def calculate_positions():
 
     #creates placeholders for the top 3 scorers
     first = {
-        "username": "player1",
+        "username": "N/A",
         "high_score": 0
         }
     second = {
-        "username": "player2",
+        "username": "N/A",
         "high_score": 0
         }
     third = {
-        "username": "player3",
+        "username": "N/A",
         "high_score": 0
         }
 
@@ -160,7 +151,27 @@ def calculate_positions():
         elif x["high_score"] > third["high_score"]:
             third = x
 
+    #return the name and high_score in the right order as ditionary objects
     return first, second, third
+
+def display_leaderboard():
+    gameDisplay.fill(black)
+    display_text(yellow, 230,50,"LEADERBOARD",pygame.font.Font("Stages/Stage 2/arcade_font.ttf", 50))
+
+    positions = calculate_positions() # functions returns the top 3 scores as dictionary objects
+    
+    #an error message is displayed if there's not enough data to display the scores
+    if positions == "invalid":
+        display_text(red, 200,400 , "NOT ENOUGH DATA", leaderboard_font)
+    
+    #the names and scores of the players are displayed if there is enough data
+    else:
+        display_text(white, 250, 250, "NAME", leaderboard_font) 
+        display_text(white, 750, 250, "SCORE", leaderboard_font)
+        for x in range(3): # loops 3 times to display the names and high_scores
+            display_text(white, 50, 350+(100*x),(str(x+1)+".       "+ positions[x]["username"]), leaderboard_font)
+            display_text(white, 750, 350+(100*x), str(positions[x]["high_score"]), leaderboard_font)
+        
 
 def scroll_background(gd):
     global background_x #creates a global variable which contains x co-ordinate of background photo
@@ -171,13 +182,16 @@ def scroll_background(gd):
     gd.blit(level_background, (background_x, 0)) 
     gd.blit(level_background, (background_x + 2000, 0))
 
+
 def show_soldiers(soldier_count,soldier_photo,x,y,gd):
       gd.blit(soldier_photo, (x,y))
       display_text(black,x+25,y+110,str(soldier_count),level_font)
 
+
 def show_tanks(tank_count,tank_photo,x,y,gd):
       gd.blit(tank_photo, (x,y))
       display_text(black,x+45,y+90,str(tank_count),level_font)
+
 
 def spawn_initial_enemies(soldier_spritesheet,tank_spritesheet,player1,s_spritesheet,t_spritesheet):
     for x in range(5):  
@@ -201,6 +215,7 @@ def display_pause_menu(gd,score, high_score):
     display_text(white,600,289,str(int(score)),arcade_font)
     display_text(white,600,385,str(int(high_score)),arcade_font)
 
+
 def check_score(name,new_score,high_score):
     #load a copy of the JSON file containing scores
     file = load_name_score()
@@ -215,11 +230,13 @@ def check_score(name,new_score,high_score):
     with open('name_score.json', 'w') as output_file:
         json.dump(file, output_file, indent=3)
 
+
 def return_high_score(name):
     file = load_name_score()
     for x in file["users"]:
         if x["username"] == name.upper():
             return(x["high_score"])     
+
 
 def increase_brightness(gd,counter):
     #a surface is created and the game_over image is drawn over it
@@ -231,9 +248,11 @@ def increase_brightness(gd,counter):
     #draws the surface "fade" onto the game display
     gd.blit(fade,(0,0))
 
+
 def display_loss_screen(gd,score):
     gd.blit(game_over,(0,0))
     display_text(black,650,450,str(int(score)),pygame.font.Font("Stages/Stage 2/arcade_font.ttf", 65))
+
 
 def winning_fading(gd,counter):
     #create a fade surface
@@ -244,6 +263,7 @@ def winning_fading(gd,counter):
     fade.set_alpha(counter-150)
     #draw surface onto screen
     gd.blit(fade,(0,0))
+
 
 def win_screen(gd,score,high_score,counter):
     #draw the winning image and mission completed stamp onto the screen
@@ -256,6 +276,7 @@ def win_screen(gd,score,high_score,counter):
         #display the appropriate scores
         display_text(black,580,350,str(int(score)),pygame.font.Font("Stages/Stage 2/arcade_font.ttf", 35))
         display_text(black,580,511,str(int(score)),pygame.font.Font("Stages/Stage 2/arcade_font.ttf", 35))
+
 
 def reset_level(player,timer,uzi,grenade,soldiers,tanks,first_soldier,powerup):
     #make the cursor visible 
@@ -277,6 +298,7 @@ def reset_level(player,timer,uzi,grenade,soldiers,tanks,first_soldier,powerup):
     #spawns the enemies again randomly 
     spawn_initial_enemies(soldiers,tanks,player,soldier_spritesheet,tank_spritesheet)
 
+
 def display_game_graphics(gd,powerups,soldiers,tanks,first_soldier,events,gun,grenade,player):
     gd.fill(white)
     scroll_background(gd)
@@ -292,9 +314,11 @@ def display_game_graphics(gd,powerups,soldiers,tanks,first_soldier,events,gun,gr
     grenade.shoot_effects(events["right-click"], grenade_visual, gd,events["x"],events["y"],events["x"] - 125,events["y"] - 125,[soldiers,tanks])
     gun.draw_hitbox(gd,black,4,10)
 
+
 def start_timer(timer):
     if getattr(timer,'started') == False:
         timer.start()
+
 
 def pause_game(timer,events):
     if events["space"] == 1:
@@ -304,6 +328,7 @@ def pause_game(timer,events):
     else:
         return "play"
 
+
 def max_soldiers_onscreen(given_first_soldier):
     if given_first_soldier.get_soldiers_killed() >= 10 and given_first_soldier.get_soldiers_killed() <=29:
         return 10 
@@ -312,6 +337,7 @@ def max_soldiers_onscreen(given_first_soldier):
     else:
         return 5
     
+
 def add_soldiers_to_screen(soldiers,max_soldiers,first_soldier,player):
     if len(soldiers) < max_soldiers and first_soldier.get_soldiers_left() >=0:
         direction = random.getrandbits(1)
@@ -320,6 +346,7 @@ def add_soldiers_to_screen(soldiers,max_soldiers,first_soldier,player):
         else:
             enemy_soldier = enemy(random.randint(1000,1500),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player,"soldier",100,200,-0.5)
         soldiers.add(enemy_soldier)
+
 
 def add_tanks_to_screen(tanks,max_tanks,first_soldier,player):
     if len(tanks) < max_tanks and first_soldier.get_tanks_left() !=0:  
@@ -330,6 +357,7 @@ def add_tanks_to_screen(tanks,max_tanks,first_soldier,player):
         else:
             enemy_tank = enemy(random.randint(1000,2000),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player,"tank",320,200,-1)
         tanks.add(enemy_tank) 
+
 
 def check_win(no_soldiers,first_soldier,player, gd, gamestate):
     global win_counter, win_sound,sound_play, max_soldiers
@@ -360,6 +388,7 @@ def check_win(no_soldiers,first_soldier,player, gd, gamestate):
     else:
         return False, "play"
 
+
 def check_loss(player,gd):
     if getattr(player,'health') <= 0:
         #play game over sound
@@ -380,12 +409,14 @@ def check_loss(player,gd):
             return "loss"
     return "play"
 
+
 def resume(events,timer):
     if events["enter"] == 1:
         timer.resume()
         return "play"   
     else:
         return "pause"
+
 
 def play_again(events,player,timer,gun,grenade,soldiers,tanks,first_soldier,powerups,current_screen,win_screen_counter):
     if events["space"]:

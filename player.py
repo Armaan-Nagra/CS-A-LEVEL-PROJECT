@@ -14,7 +14,7 @@ class player():
         self.health += amount
 
 
-    def health_bar(self,gd):
+    def health_bar(self,gd): #draws the health bar on top of the screen
         ratio = self.health/100
         pygame.draw.rect(gd, "red", (400,5, 200,50))
         pygame.draw.rect(gd, "green", (400,5, 200 * ratio, 50))

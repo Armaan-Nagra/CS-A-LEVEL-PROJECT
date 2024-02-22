@@ -11,12 +11,12 @@ import random
 from powerups import *
 from timer import *
 
-width, height, gameDisplay, clock = initialise_pygame_display()
+screen_width, screen_height, gameDisplay, clock = initialise_pygame_display()
 
 # creating objects of classes
 player1 = player(0,100)
 gun = weapon("uzi",101,150,gunshot_sound)
-grenade = weapon("grenade",50,500,grenade_sound)
+grenade = weapon("grenade",5,500,grenade_sound)
 powerups = powerups(player1, gun,random.randint(800,1100),-100,300, gameDisplay)
 timer = PausableTimer()
 
@@ -35,8 +35,8 @@ while gamestate != "end": # loops until the user wants to exit the game.
     elif gamestate == "start": 
         play_music(background_music) # play_music function is called which creates the background music 
         draw_cover(main_background) # this function draws the cover of the game onto the screen
-        gamestate = can_proceed(events) # this function returns whether the display should proceed onto the next screesn by listening for space key    
-    
+        gamestate = name_to_start(events) # this function returns whether the display should proceed onto the next screesn by listening for space key    
+
 
     elif gamestate == "name":
         draw_messages_and_title(gameDisplay)
