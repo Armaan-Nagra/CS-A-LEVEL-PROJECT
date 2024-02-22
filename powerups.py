@@ -9,20 +9,21 @@ class powerups():
         self.x = gx
         self.y = gy        
         self.opacity = gopacity
+        self.gd = ggd
+
         self.first = random.randint(30,40)
         self.second = random.randint(10,29) 
         self.third = random.randint(1,9) 
         self.powerups_list = [self.first,self.second,self.third]
-        self.crate = crate
+
         self.moving = False
         self.shot = False
+        self.show_message = False
         self.message_x = 0
         self.message_y = 0
-        self.message_photo = None
-        self.show_message = False
         self.type = None 
         self.size = None
-        self.gd = ggd
+        self.message_photo = None
     
     def update(self,soldiers,x,y,left_click):
         #check whether the amount of enemies left equals any of the randomly generated integers in the self.powerups_list list
@@ -54,9 +55,9 @@ class powerups():
 
 
     def draw(self):
-        #draw the crate only when the player has not shot it and a power up exists
+        #draw the crate only when a power up exists and the player has not shot it  
         if self.type != None and self.shot == False:
-            self.gd.blit(self.crate,(self.x,self.y))
+            self.gd.blit(crate,(self.x,self.y))
 
 
 
@@ -77,7 +78,7 @@ class powerups():
             self.moving = False
     
     def check_collision(self,mouse_x,mouse_y,mouse_left):
-        #if the mouse left side is being clicked and crate has not been shot
+        #if the mouse is being left-clicked and crate has not been shot
         if mouse_left and self.shot == False:
             #checks if the cursor is over the crate
             if mouse_x > self.x and mouse_x < self.x +100:
@@ -119,12 +120,16 @@ class powerups():
     def visual_effect(self):
         #surface created with the size of the message/image
         temp = pygame.Surface(self.size).convert()
+
         #a copy of the game display is drawn onto the temp surface 
         temp.blit(self.gd, (-self.message_x, -self.message_y))
+
         #photo of visual effect drawn onto surface
         temp.blit(self.message_photo, (0, 0))
+
         #opacity of the surface is changed to "opacity"
         temp.set_alpha(self.opacity)        
+        
         #surface drawn onto game display
         self.gd.blit(temp, (self.message_x,self.message_y))
         
