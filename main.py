@@ -13,6 +13,7 @@ from timer import *
 
 width, height, gameDisplay, clock = initialise_pygame_display()
 
+# creating objects of classes
 player1 = player(0,0,100)
 gun = weapon("uzi",101,150,gunshot_sound)
 grenade = weapon("grenade",5,500,grenade_sound)
@@ -23,17 +24,21 @@ timer = PausableTimer()
 spawn_initial_enemies(soldier_spritesheet,tank_spritesheet,player1,soldier_spritesheet,tank_spritesheet)
 
 gamestate = "start"
-while gamestate != "end": #loops until the user wants to exit the game.
-    events = get_events() #the variable events contains the dictionary of events returned by get_events()
+while gamestate != "end": # loops until the user wants to exit the game.
+
+    events = get_events() # the variable events contains the dictionary of events returned by get_events()
+
     if events["quit"] == 1 or events["esc"] == 1: # if user presses the x on the top right of display or presses esc key
-        gamestate = "end" #the gamestate is equal to "end" and the loop stops and the user leaves
+        gamestate = "end" # the gamestate is equal to "end" and the loop stops and the user leaves
+    
+
     elif gamestate == "start": 
-        play_music(background_music) #play_music function is called which creates the background music 
-        draw_cover(main_background) #this function draws the cover of the game onto the screen
+        play_music(background_music) # play_music function is called which creates the background music 
+        draw_cover(main_background) # this function draws the cover of the game onto the screen
         gamestate = can_proceed(events) # this function returns whether the display should proceed onto the next screesn by listening for space key    
 
+
     elif gamestate == "name":
-        #global name
         draw_messages_and_title(gameDisplay)
         name = ask_name(gameDisplay,events)
         display_text(black,50,715,"Enter Name:",base_font)
@@ -46,17 +51,21 @@ while gamestate != "end": #loops until the user wants to exit the game.
         player1.change_name(name)
         display_name_score(name) # displays name of player and their highest score
 
-        # code below creates 2 classes for the buttons 
+        # code below creates 2 classes for the buttons, play button and leaderboard button
         play = button(350,400,300,300,gameDisplay,orange,"menu","play","PLAY", 60, white,events)
         lb = button(550,150,150,350,gameDisplay,yellow,"menu","leaderboard","LEADERBOARD",45,black,events)
 
         # the functions below makes sure gamestate is assigned a value based on the precedence of the button clicked
-        # not the order of code
+        # this stops user from clicking both buttons and breaking game
         gamestate = precedence(lb.redirect(), play.redirect(),"menu")
+
+    
     elif gamestate == "leaderboard":
         display_leaderboard()   
-        mm = button(550,750,200,400,gameDisplay,navy_blue,"leaderboard","menu","BACK TO MAIN MENU",45,white,events)
-        gamestate = mm.redirect()
+
+        #leader board to main menu button
+        lb_to_mm = button(550,750,200,400,gameDisplay,navy_blue,"leaderboard","menu","BACK TO MAIN MENU",45,white,events)
+        gamestate = lb_to_mm.redirect()
         
 
     elif gamestate == "play":
@@ -173,7 +182,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
         except:
             pass
         
-        print(getattr(player1,"current_score"),getattr(player1,"high_score"))
+    
     elif gamestate == "pause":
         if events["enter"] == 1:
             timer.resume()
@@ -182,12 +191,14 @@ while gamestate != "end": #loops until the user wants to exit the game.
         #display the pause menu with scores information
         display_pause_menu(gameDisplay,getattr(player1,"current_score"),getattr(player1,"high_score"))
     
+
     elif gamestate == "loss":
         check_score(getattr(player1,"name"),int(getattr(player1,"current_score")),getattr(player1,"high_score")) 
         loss_screen(gameDisplay,getattr(player1,"current_score"))
         if events["space"]:
             gamestate = "menu"
             reset_level(player1,timer,gun,grenade,soldiers,tanks,soldier_spritesheet,tank_spritesheet,first_soldier,powerups)
+
 
     elif gamestate == "win":
         global win_screen_image,win_screen_counter
