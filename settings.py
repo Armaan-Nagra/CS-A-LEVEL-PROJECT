@@ -47,13 +47,13 @@ global max_soldiers, soldiers_killed, soldiers_left
 
 soldiers = pygame.sprite.Group()
 
-soldier1 = pygame.image.load('Stages/Stage 5/photos/INGAME/soldier1.png')
+soldier = pygame.image.load('Stages/Stage 5/photos/INGAME/soldier.png')
 soldier2 = pygame.image.load('Stages/Stage 5/photos/INGAME/soldier2.png')
 shooting_soldier = pygame.image.load('Stages/Stage 5/photos/INGAME/shooting_soldier.png')
 shooting_soldier2 = pygame.image.load('Stages/Stage 5/photos/INGAME/shooting_soldier2.png')
 
 soldier_spritesheet = []
-soldier_spritesheet.append(soldier1)
+soldier_spritesheet.append(soldier)
 soldier_spritesheet.append(soldier2)
 soldier_spritesheet.append(shooting_soldier)
 soldier_spritesheet.append(shooting_soldier2)
@@ -68,17 +68,18 @@ no_soldiers = False
 #tanks
 tanks = pygame.sprite.Group()
 
-tank1 = pygame.image.load('Stages/Stage 5/photos/INGAME/tank.png')
+tank = pygame.image.load('Stages/Stage 5/photos/INGAME/tank.png')
 tank2 = pygame.image.load('Stages/Stage 5/photos/INGAME/tank2.png')
-tank_white = pygame.image.load('Stages/Stage 5/photos/INGAME/tank shoot.png')
-tank_shoot = pygame.image.load('Stages/Stage 5/photos/INGAME/tank3.png')
-tank_small = pygame.image.load('Stages/Stage 5/photos/INGAME/tank_small.png')
+shooting_tank = pygame.image.load('Stages/Stage 5/photos/INGAME/shooting_tank.png')    
+shooting_tank2 = pygame.image.load('Stages/Stage 5/photos/INGAME/shooting_tank2.png')
 
 tank_spritesheet = []
-tank_spritesheet.append(tank1)
+tank_spritesheet.append(tank)
 tank_spritesheet.append(tank2)
-tank_spritesheet.append(tank_shoot)
-tank_spritesheet.append(tank_white) 
+tank_spritesheet.append(shooting_tank)
+tank_spritesheet.append(shooting_tank2) 
+
+tank_icon = pygame.image.load('Stages/Stage 5/photos/INGAME/tank_icon.png')
 
 max_tanks = 1
 tanks_left = 5
@@ -86,7 +87,7 @@ tanks_shot = 0
 
 #powerups
 crate = pygame.image.load('Stages/Stage 5/photos/INGAME/crate.png')
-add_ammo = pygame.image.load('Stages/Stage 5/photos/INGAME/+15.png')
+add_ammo = pygame.image.load('Stages/Stage 5/photos/INGAME/add_ammo.png')
 hearts = pygame.image.load('Stages/Stage 5/photos/INGAME/hearts.png')
 chaching = pygame.mixer.Sound('Stages/Stage 5/sounds/chaching.mp3')
 slurp = pygame.mixer.Sound('Stages/Stage 5/sounds/slurp.mp3')
@@ -101,16 +102,16 @@ alpha_counter = 0
 last_stamp = 0
 sound_play = False
 loss_sound = pygame.mixer.Sound('Stages/Stage 7/sounds/game_over.wav')
-game_over = pygame.image.load('Stages/Stage 7/images/Gameover2.png')
+game_over = pygame.image.load('Stages/Stage 7/images/Gameover.png')
 
 #win screen
 global win_counter,win_sound,win_screen_counter
 win_counter = 0
 win_sound = pygame.mixer.Sound('Stages/Stage 8/sounds/win_sound.mp3')
-winning_image = pygame.image.load('Stages/Stage 8/images/saving_monkey.png')
+winning_image = pygame.image.load('Stages/Stage 8/images/winning_image.png')
 mission_completed = pygame.image.load('Stages/Stage 8/images/mission_completed.png')
 stamp = pygame.mixer.Sound("Stages/Stage 8/sounds/stamp.mp3")
-win_screen_image = pygame.image.load('Stages/Stage 8/images/mission_passed2.png')
+win_screen_image = pygame.image.load('Stages/Stage 8/images/mission_passed.png')
 win_screen_counter = 0
 
 

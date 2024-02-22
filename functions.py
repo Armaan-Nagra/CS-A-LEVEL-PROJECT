@@ -109,7 +109,7 @@ def display_menu_texts():
     
 def display_leaderboard():
     gameDisplay.fill(black)
-    display_text(yellow, 230,50,"LEADERBOARD",pygame.font.Font("Stages/Stage 2/pixel.ttf", 50))
+    display_text(yellow, 230,50,"LEADERBOARD",pygame.font.Font("Stages/Stage 2/arcade_font.ttf", 50))
 
     positions = calculate_positions() # functions returns the top 3 scores as dictionary objects
 
@@ -254,8 +254,8 @@ def win_screen(gd,score,high_score,counter):
         #draw the win_screen_image containing scoring onto the screen
         gd.blit(win_screen_image,(0,0))
         #display the appropriate scores
-        display_text(black,580,350,str(int(score)),pygame.font.Font("Stages/Stage 2/pixel.ttf", 35))
-        display_text(black,580,511,str(int(score)),pygame.font.Font("Stages/Stage 2/pixel.ttf", 35))
+        display_text(black,580,350,str(int(score)),pygame.font.Font("Stages/Stage 2/arcade_font.ttf", 35))
+        display_text(black,580,511,str(int(score)),pygame.font.Font("Stages/Stage 2/arcade_font.ttf", 35))
 
 def reset_level(player,timer,uzi,grenade,soldiers,tanks,soldier_spritesheet,tank_spritesheet,first_soldier,powerup):
     #make the cursor visible 

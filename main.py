@@ -121,7 +121,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
 
         #displays the amount of soldiers and tanks left
         show_soldiers(first_soldier.get_soldiers_left(),soldier_icon,50,800,gameDisplay)
-        show_tanks(first_soldier.get_tanks_left(),tank_small,170,820,gameDisplay)
+        show_tanks(first_soldier.get_tanks_left(),tank_icon,170,820,gameDisplay)
 
         #calculate the player's score
         #player1.calculate_score(getattr(gun,'bullets'),timer.get_elapsed_time(),soldiers.sprites()[0].get_soldiers_killed(),soldiers.sprites()[0].get_tanks_shot())
