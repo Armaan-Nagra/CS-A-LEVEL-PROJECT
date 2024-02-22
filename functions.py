@@ -168,8 +168,8 @@ def scroll_background(gd):
     if background_x <= -2000: #if the photo reaches x co-ordinate "-2000", x co-ordinate becomes 0
         background_x = 0 
     #background_image is a variable stored in settings and it's displayed to the screen at x co-ordinate 0 and 2,000
-    gd.blit(background_image, (background_x, 0)) 
-    gd.blit(background_image, (background_x + 2000, 0))
+    gd.blit(level_background, (background_x, 0)) 
+    gd.blit(level_background, (background_x + 2000, 0))
 
 def show_soldiers(soldier_count,soldier_photo,x,y,gd):
       gd.blit(soldier_photo, (x,y))
@@ -233,7 +233,7 @@ def increase_brightness(gd,counter):
 
 def loss_screen(gd,score):
     gd.blit(game_over,(0,0))
-    display_text(black,650,450,str(int(score)),pygame.font.Font("Stages/Stage 2/pixel.ttf", 65))
+    display_text(black,650,450,str(int(score)),pygame.font.Font("Stages/Stage 2/arcade_font.ttf", 65))
 
 def winning_fading(gd,counter):
     #create a fade surface

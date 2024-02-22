@@ -19,18 +19,6 @@ grenade = weapon("grenade",5,500,grenade_sound)
 powerups = powerups(player1, gun,random.randint(800,1100),-100,300, gameDisplay)
 timer = PausableTimer()
 
-soldier_spritesheet = []
-soldier_spritesheet.append(run1)
-soldier_spritesheet.append(run2)
-soldier_spritesheet.append(shooting_soldier)
-soldier_spritesheet.append(white_shoot)
-
-tank_spritesheet = []
-tank_spritesheet.append(tank1)
-tank_spritesheet.append(tank2)
-tank_spritesheet.append(tank_shoot)
-tank_spritesheet.append(tank_white) 
-
 
 spawn_initial_enemies(soldier_spritesheet,tank_spritesheet,player1,soldier_spritesheet,tank_spritesheet)
 
@@ -132,7 +120,7 @@ while gamestate != "end": #loops until the user wants to exit the game.
             tanks.add(enemy_tank) 
 
         #displays the amount of soldiers and tanks left
-        show_soldiers(first_soldier.get_soldiers_left(),soldier_headshot,50,800,gameDisplay)
+        show_soldiers(first_soldier.get_soldiers_left(),soldier_icon,50,800,gameDisplay)
         show_tanks(first_soldier.get_tanks_left(),tank_small,170,820,gameDisplay)
 
         #calculate the player's score
