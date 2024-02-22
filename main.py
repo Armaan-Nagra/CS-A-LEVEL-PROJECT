@@ -16,7 +16,7 @@ width, height, gameDisplay, clock = initialise_pygame_display()
 # creating objects of classes
 player1 = player(0,100)
 gun = weapon("uzi",101,150,gunshot_sound)
-grenade = weapon("grenade",5,500,grenade_sound)
+grenade = weapon("grenade",50,500,grenade_sound)
 powerups = powerups(player1, gun,random.randint(800,1100),-100,300, gameDisplay)
 timer = PausableTimer()
 
@@ -102,10 +102,10 @@ while gamestate != "end": # loops until the user wants to exit the game.
             gamestate = pause_game(timer,events)
                 
         try: #calculate the player's score
-            player1.calculate_score(getattr(gun,'bullets'),timer.get_elapsed_time(),soldiers.sprites()[0].get_soldiers_killed(),soldiers.sprites()[0].get_tanks_shot())
+            player1.calculate_score(getattr(gun,'ammo'),timer.get_elapsed_time(),soldiers.sprites()[0].get_soldiers_killed(),soldiers.sprites()[0].get_tanks_shot())
         except:
             pass
-        
+        #print(int(getattr(player1,"current_score")))
      
     elif gamestate == "pause":
         #wait for player to resume
