@@ -25,7 +25,7 @@ spawn_initial_enemies(soldier_spritesheet,tank_spritesheet,player1,soldier_sprit
 
 gamestate = "start"
 while gamestate != "end": # loops until the user wants to exit the game.
-
+    print(gamestate)
     events = get_events() # the variable events contains the dictionary of events returned by get_events()
 
     if events["quit"] == 1 or events["esc"] == 1: # if user presses the x on the top right of display or presses esc key
@@ -69,40 +69,22 @@ while gamestate != "end": # loops until the user wants to exit the game.
         
 
     elif gamestate == "play":
+
         background_music.stop()
         
-        #start timer if the game just started
-        if getattr(timer,'started') == False:
-            timer.start()
-
-        #if the player wants to pause
-        if events["space"] == 1:
-            #pause the timer
-            timer.pause()
-            gamestate = "pause"
-
-        #I find the first soldier from the soldiers group if there is any 
-        try:
+        try: #Finding the first soldier from the sprite group
             first_soldier = soldiers.sprites()[0]
         except:
             no_soldiers = True
 
-        #display the background
-        gameDisplay.fill(white)
-        scroll_background(gameDisplay)
-        powerups.update(first_soldier.get_soldiers_left(),events["x"],events["y"],events["left-click"])
-        soldiers.update(gameDisplay)
-        tanks.update(gameDisplay)
+        #display the graphics
+        display_game_graphics(gameDisplay,powerups,soldiers,tanks,first_soldier,events,gun,grenade,player1)
 
-        #display information about the player
-        player1.health_bar(gameDisplay)
-        gun.display_HUD(uzi,gameDisplay,750,800,775,925)
-        grenade.display_HUD(grenade_image,gameDisplay,875,800,915,925)
-         
-        #weapon effects
-        gun.shoot_effects(events["left-click"], black_cross,gameDisplay,events["x"],events["y"],events["x"] - 25,events["y"]-25,[soldiers,tanks])
-        grenade.shoot_effects(events["right-click"], grenade_visual, gameDisplay,events["x"],events["y"],events["x"] - 125,events["y"] - 125,[soldiers,tanks])
-        gun.draw_hitbox(gameDisplay,black,4,10)
+        #start the timer to check how long game takes to finish 
+        start_timer(timer)
+
+        #pause the game if player presses space
+        gamestate = pause_game(timer,events)
         
         #declares how many enemies are allowed at any one time on the screen
         if first_soldier.get_soldiers_killed() >= 10 and first_soldier.get_soldiers_killed() <=29:
@@ -128,12 +110,6 @@ while gamestate != "end": # loops until the user wants to exit the game.
                 enemy_tank = enemy(random.randint(1000,2000),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200,-1)
             tanks.add(enemy_tank) 
 
-        #displays the amount of soldiers and tanks left
-        show_soldiers(first_soldier.get_soldiers_left(),soldier_icon,50,800,gameDisplay)
-        show_tanks(first_soldier.get_tanks_left(),tank_icon,170,820,gameDisplay)
-
-        #calculate the player's score
-        #player1.calculate_score(getattr(gun,'bullets'),timer.get_elapsed_time(),soldiers.sprites()[0].get_soldiers_killed(),soldiers.sprites()[0].get_tanks_shot())
 
         if no_soldiers == True and first_soldier.get_tanks_left() == 0:
             global win_counter, win_sound,sound_play

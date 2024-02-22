@@ -277,3 +277,29 @@ def reset_level(player,timer,uzi,grenade,soldiers,tanks,soldier_spritesheet,tank
     #spawns the enemies again randomly 
     spawn_initial_enemies(soldiers,tanks,player,soldier_spritesheet,tank_spritesheet)
 
+def display_game_graphics(gd,powerups,soldiers,tanks,first_soldier,events,gun,grenade,player):
+    gd.fill(white)
+    scroll_background(gd)
+    powerups.update(first_soldier.get_soldiers_left(),events["x"],events["y"],events["left-click"])
+    soldiers.update(gd)
+    tanks.update(gd)
+    player.health_bar(gd)
+    gun.display_HUD(uzi,gd,750,800,775,925)
+    grenade.display_HUD(grenade_image,gd,875,800,915,925)
+    show_soldiers(first_soldier.get_soldiers_left(),soldier_icon,50,800,gd)
+    show_tanks(first_soldier.get_tanks_left(),tank_icon,170,820,gd)
+    gun.shoot_effects(events["left-click"], black_cross,gd,events["x"],events["y"],events["x"] - 25,events["y"]-25,[soldiers,tanks])
+    grenade.shoot_effects(events["right-click"], grenade_visual, gd,events["x"],events["y"],events["x"] - 125,events["y"] - 125,[soldiers,tanks])
+    gun.draw_hitbox(gd,black,4,10)
+
+def start_timer(timer):
+    if getattr(timer,'started') == False:
+        timer.start()
+
+def pause_game(timer,events):
+    if events["space"] == 1:
+        #pause the timer
+        timer.pause()
+        return "pause"
+    else:
+        return "play"
