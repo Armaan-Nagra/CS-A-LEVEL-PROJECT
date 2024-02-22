@@ -87,28 +87,11 @@ while gamestate != "end": # loops until the user wants to exit the game.
         gamestate = pause_game(timer,events)
         
         #declares how many enemies are allowed at any one time on the screen
-        if first_soldier.get_soldiers_killed() >= 10 and first_soldier.get_soldiers_killed() <=29:
-            max_soldiers = 10 
-        if first_soldier.get_soldiers_killed() >= 30:
-            max_soldiers = first_soldier.get_soldiers_left() 
+        max_soldiers = max_soldiers_onscreen(first_soldier)
 
-        #the two main if statements below make sure that the right amount of tanks and enemies are visible at any one time
-        if len(soldiers) < max_soldiers and first_soldier.get_soldiers_left() >=0:
-            direction = random.getrandbits(1)
-            if direction == 1:
-                enemy_soldier = enemy(random.randint(-1500,-150),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200,-0.5)
-            else:
-                enemy_soldier = enemy(random.randint(1000,1500),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200,-0.5)
-            soldiers.add(enemy_soldier)
-        
-        if len(tanks) < max_tanks and first_soldier.get_tanks_left() !=0:  
-            direction = random.getrandbits(1)
-            #direction = 1
-            if direction == 1:
-                enemy_tank = enemy(random.randint(-1000,-250),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200,-1)
-            else:
-                enemy_tank = enemy(random.randint(1000,2000),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200,-1)
-            tanks.add(enemy_tank) 
+        #add enemies to screen as soon as they are killed or shot
+        add_soldiers_to_screen(soldiers,max_soldiers,first_soldier,player1)
+        add_tanks_to_screen(tanks,max_tanks,first_soldier,player1)
 
 
         if no_soldiers == True and first_soldier.get_tanks_left() == 0:

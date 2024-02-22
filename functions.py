@@ -303,3 +303,30 @@ def pause_game(timer,events):
         return "pause"
     else:
         return "play"
+
+def max_soldiers_onscreen(given_first_soldier):
+    if given_first_soldier.get_soldiers_killed() >= 10 and given_first_soldier.get_soldiers_killed() <=29:
+        return 10 
+    if given_first_soldier.get_soldiers_killed() >= 30:
+        return given_first_soldier.get_soldiers_left() 
+    else:
+        return 5
+    
+def add_soldiers_to_screen(soldiers,max_soldiers,first_soldier,player):
+    if len(soldiers) < max_soldiers and first_soldier.get_soldiers_left() >=0:
+        direction = random.getrandbits(1)
+        if direction == 1:
+            enemy_soldier = enemy(random.randint(-1500,-150),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player,"soldier",100,200,-0.5)
+        else:
+            enemy_soldier = enemy(random.randint(1000,1500),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player,"soldier",100,200,-0.5)
+        soldiers.add(enemy_soldier)
+
+def add_tanks_to_screen(tanks,max_tanks,first_soldier,player):
+    if len(tanks) < max_tanks and first_soldier.get_tanks_left() !=0:  
+        direction = random.getrandbits(1)
+        #direction = 1
+        if direction == 1:
+            enemy_tank = enemy(random.randint(-1000,-250),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player,"tank",320,200,-1)
+        else:
+            enemy_tank = enemy(random.randint(1000,2000),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player,"tank",320,200,-1)
+        tanks.add(enemy_tank) 
