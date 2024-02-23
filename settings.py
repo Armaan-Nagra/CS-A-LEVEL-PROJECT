@@ -3,7 +3,7 @@ pygame.mixer.init()
 pygame.font.init()
 
 #welcome and name input screen
-main_background = pygame.image.load('Stages/Stage 1/main_background.png')
+main_background = pygame.image.load('Stages/Stage 1/background_image.png')
 message1 = pygame.image.load('Stages/Stage 2/message1.png')
 message2 = pygame.image.load('Stages/Stage 2/message2.png')
 background_music = pygame.mixer.Sound("Stages/Stage 1/background_music.mp3")

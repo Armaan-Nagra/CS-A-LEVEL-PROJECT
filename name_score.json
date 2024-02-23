@@ -1,32 +1,44 @@
 {
-   "users": [
-      {
-         "username": "SD",
-         "high_score": 0
-      },
-      {
-         "username": "AAW",
-         "high_score": 0
-      },
-      {
-         "username": " AA",
-         "high_score": 10663
-      },
-      {
-         "username": "TESTING",
-         "high_score": 10636
-      },
-      {
-         "username": " SS",
-         "high_score": 0
-      },
-      {
-         "username": "AA",
-         "high_score": 10621
-      },
-      {
-         "username": "SS",
-         "high_score": 282
-      }
-   ]
+    "users": [
+        {
+            "username": "SD",
+            "high_score": 0
+        },
+        {
+            "username": "AAW",
+            "high_score": 0
+        },
+        {
+            "username": " AA",
+            "high_score": 10663
+        },
+        {
+            "username": "TESTING",
+            "high_score": 10636
+        },
+        {
+            "username": " SS",
+            "high_score": 0
+        },
+        {
+            "username": "AA",
+            "high_score": 10621
+        },
+        {
+            "username": "SS",
+            "high_score": 282
+        },
+        {
+            "username": "HELLO",
+            "high_score": 0
+        },
+        {
+            "username": "DD",
+            "high_score": 10647
+        },
+        {
+            "username": "AAARRQ",
+            "high_score": 0
+        }
+    ]
 }
