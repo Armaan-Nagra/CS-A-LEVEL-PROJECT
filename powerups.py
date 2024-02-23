@@ -25,6 +25,7 @@ class powerups():
         self.size = None
         self.message_photo = None
     
+
     def update(self,soldiers,x,y,left_click):
         #check whether the amount of enemies left equals any of the randomly generated integers in the self.powerups_list list
         for powerup in self.powerups_list:
@@ -60,7 +61,6 @@ class powerups():
             self.gd.blit(crate,(self.x,self.y))
 
 
-
     def move(self):
         #if the y co-ordinate of the crate is less than or equal to 350, it's increased by 5
         if self.y <= 350:
@@ -77,6 +77,7 @@ class powerups():
             self.y = -100
             self.moving = False
     
+
     def check_collision(self,mouse_x,mouse_y,mouse_left):
         #if the mouse is being left-clicked and crate has not been shot
         if mouse_left and self.shot == False:
@@ -89,6 +90,7 @@ class powerups():
                     self.y = -100
                     self.moving = False
     
+
     def use_power_up(self):
         if self.type == "health":
             self.player.change_health(50)
@@ -117,6 +119,7 @@ class powerups():
         if self.type == "damage":
             self.weapon.more_damage(red,machine_gun)
     
+
     def visual_effect(self):
         #surface created with the size of the message/image
         temp = pygame.Surface(self.size).convert()
@@ -132,6 +135,7 @@ class powerups():
         
         #surface drawn onto game display
         self.gd.blit(temp, (self.message_x,self.message_y))
+        
         
     def reset_powerups(self): 
         self.x = random.randint(800,1100)

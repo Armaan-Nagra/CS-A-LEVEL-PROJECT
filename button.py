@@ -49,6 +49,7 @@ class button():
                     if self.events["left-click"] == 1:
                         self.clicked = True
 
+
     #appropriate decisions made after the user enters their name
     def name(self,name):
         self.update()
@@ -82,6 +83,7 @@ class button():
                     return self.destination
         else:
             return self.current
+
 
     #the gamestate is appropriately returned, the destination gamestate is only returned if the user clicks the button
     def redirect(self):

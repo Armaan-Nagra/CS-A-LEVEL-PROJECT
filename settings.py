@@ -40,7 +40,7 @@ grenade_visual = pygame.image.load('Stages/Stage 5/photos/INGAME/explosion.png')
 #level scrolling background
 level_background = pygame.image.load('Stages/Stage 5/photos/level_background.png')
 scroll_speed = 0.5
-background_x = 0
+scroll_background_x = 0
 
 #soldiers
 global max_soldiers, soldiers_killed, soldiers_left, no_soldiers
@@ -97,10 +97,10 @@ machine_gun = pygame.mixer.Sound('Stages/Stage 5/sounds/machine-gun.mp3')
 pause_menu = pygame.image.load('Stages/Stage 6/images/pause_menu.png')
 
 #loss screen
-global alpha_counter, last_stamp, sound_play
+global alpha_counter, last_stamp, sound_playing
 alpha_counter = 0
 last_stamp = 0
-sound_play = False
+sound_playing = False
 loss_sound = pygame.mixer.Sound('Stages/Stage 7/sounds/game_over.wav')
 game_over = pygame.image.load('Stages/Stage 7/images/Gameover.png')
 

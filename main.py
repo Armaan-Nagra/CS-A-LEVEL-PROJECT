@@ -21,7 +21,7 @@ powerups = powerups(player1, gun,random.randint(800,1100),-100,300, gameDisplay)
 timer = PausableTimer()
 
 
-spawn_initial_enemies(soldier_spritesheet,tank_spritesheet,player1,soldier_spritesheet,tank_spritesheet)
+spawn_initial_enemies(player1)
 
 gamestate = "start"
 while gamestate != "end": # loops until the user wants to exit the game.
@@ -91,7 +91,7 @@ while gamestate != "end": # loops until the user wants to exit the game.
         add_tanks_to_screen(tanks,max_tanks,first_soldier,player1) 
 
         #checking if the player has won the game    
-        no_soldiers, gamestate = check_win(no_soldiers,first_soldier,player1,gameDisplay, gamestate)
+        no_soldiers, gamestate = check_win(no_soldiers,first_soldier,player1,gameDisplay)
 
         #if player has no health, game is over
         if gamestate != "win":

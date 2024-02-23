@@ -173,47 +173,122 @@ def display_leaderboard():
             display_text(white, 750, 350+(100*x), str(positions[x]["high_score"]), leaderboard_font)
         
 
+def display_game_graphics(gd,powerups,soldiers,tanks,first_soldier,events,gun,grenade,player):
+    gd.fill(white)
+    scroll_background(gd)
+    powerups.update(first_soldier.get_soldiers_left(),events["x"],events["y"],events["left-click"])
+    soldiers.update(gd)
+    tanks.update(gd)
+    player.health_bar(gd)
+    gun.display_icon(uzi,gd,750,800,775,925)
+    grenade.display_icon(grenade_image,gd,875,800,915,925)
+    show_soldiers(first_soldier.get_soldiers_left(),soldier_icon,50,800,gd)
+    show_tanks(first_soldier.get_tanks_left(),tank_icon,170,820,gd)
+    gun.shoot_effects(events["left-click"], black_cross,gd,events["x"],events["y"],events["x"] - 25,events["y"]-25,[soldiers,tanks])
+    grenade.shoot_effects(events["right-click"], grenade_visual, gd,events["x"],events["y"],events["x"] - 125,events["y"] - 125,[soldiers,tanks])
+    gun.draw_hitbox(gd,black,4,10)
+
+
+def start_timer(timer):
+    if getattr(timer,'started') == False:
+        timer.start()
+
+
 def scroll_background(gd):
-    global background_x #creates a global variable which contains x co-ordinate of background photo
-    background_x -= scroll_speed #the photo moves to the left with "scroll_speed"
-    if background_x <= -2000: #if the photo reaches x co-ordinate "-2000", x co-ordinate becomes 0
-        background_x = 0 
-    #background_image is a variable stored in settings and it's displayed to the screen at x co-ordinate 0 and 2,000
-    gd.blit(level_background, (background_x, 0)) 
-    gd.blit(level_background, (background_x + 2000, 0))
+    global scroll_background_x #creates a global variable which contains the x co-ordinate of background photo
+    scroll_background_x -= scroll_speed #the photo moves to the left with speed equal to: "scroll_speed" each frame
+    if scroll_background_x <= -2000: #if the photo reaches x co-ordinate "-2000", x co-ordinate becomes 0
+        scroll_background_x = 0 
+    #level_background is a variable stored in settings and it's displayed to the screen at x co-ordinate 0 and 2,000
+    gd.blit(level_background, (scroll_background_x, 0)) 
+    gd.blit(level_background, (scroll_background_x + 2000, 0))
+
+
+def spawn_initial_enemies(player1):
+    #spawns the initial 5 soldiers in random directions at random x and y co-ordinates (off the screen)
+    for x in range(5):  
+        direction = random.getrandbits(1) #randomly selects either 0 or 1. This affects whether enemy moves from left to right or vice versa
+        if direction == 1:
+            enemy_soldier = enemy(random.randint(-1000,-150),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200,-0.5)
+        else:
+            enemy_soldier = enemy(random.randint(1000,2000),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200,-0.5)
+        #adds this enemy object of the soldier into the soldiers sprite group
+        soldiers.add(enemy_soldier) 
+
+    #spawns the one initial tank in a random direction at a random set of x and y co-ordinates. 
+    direction = random.getrandbits(1)
+    if direction == 1:
+        enemy_tank = enemy(random.randint(-1000,-250),random.randint(250,600),500,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200,-1)
+    else:
+        enemy_tank = enemy(random.randint(1000,2000),random.randint(250,600),500,tank_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200,-1)
+    #adds this enemy object of the tank into the tanks sprite group
+    tanks.add(enemy_tank) 
+
+
+def max_soldiers_onscreen(given_first_soldier): #how many enemies are allowed on the screen at any one time, this affects how many enemies are in the sprite group
+    if given_first_soldier.get_soldiers_killed() >= 10 and given_first_soldier.get_soldiers_killed() <=29:
+        return 10 #if player has killed more than 10 enemies, the max number of enemies allowed on the screen becomes 10
+    if given_first_soldier.get_soldiers_killed() >= 30:
+        return given_first_soldier.get_soldiers_left() 
+    else:
+        return 5 
+    
+
+def add_soldiers_to_screen(soldiers,max_soldiers,first_soldier,player):
+    #soldiers are only added to the screen if the length of the soldiers sprite group is less than max_soldiers allowed
+    #the soldiers needing to be eliminated needs to be greater than or equal to 0
+    if len(soldiers) < max_soldiers and first_soldier.get_soldiers_left() >=0: 
+        direction = random.getrandbits(1)
+        if direction == 1:
+            enemy_soldier = enemy(random.randint(-1500,-150),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player,"soldier",100,200,-0.5)
+        else:
+            enemy_soldier = enemy(random.randint(1000,1500),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player,"soldier",100,200,-0.5)
+        soldiers.add(enemy_soldier)
+
+
+def add_tanks_to_screen(tanks,max_tanks,first_soldier,player):
+    if len(tanks) < max_tanks and first_soldier.get_tanks_left() !=0:  
+        direction = random.getrandbits(1)
+        #direction = 1
+        if direction == 1:
+            enemy_tank = enemy(random.randint(-1000,-250),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player,"tank",320,200,-1)
+        else:
+            enemy_tank = enemy(random.randint(1000,2000),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player,"tank",320,200,-1)
+        tanks.add(enemy_tank) 
 
 
 def show_soldiers(soldier_count,soldier_photo,x,y,gd):
-      gd.blit(soldier_photo, (x,y))
-      display_text(black,x+25,y+110,str(soldier_count),level_font)
+    #draws the icon for the amount of soldiers left
+    gd.blit(soldier_photo, (x,y))
+    display_text(black,x+25,y+110,str(soldier_count),level_font)
 
 
 def show_tanks(tank_count,tank_photo,x,y,gd):
-      gd.blit(tank_photo, (x,y))
-      display_text(black,x+45,y+90,str(tank_count),level_font)
+    #draws the icon for the amount of tanks left
+    gd.blit(tank_photo, (x,y))
+    display_text(black,x+45,y+90,str(tank_count),level_font)
 
 
-def spawn_initial_enemies(soldier_spritesheet,tank_spritesheet,player1,s_spritesheet,t_spritesheet):
-    for x in range(5):  
-        direction = random.getrandbits(1)
-        if direction == 1:
-            enemy_soldier = enemy(random.randint(-1000,-150),random.randint(250,600),100,s_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200,-0.5)
-        else:
-            enemy_soldier = enemy(random.randint(1000,2000),random.randint(250,600),100,s_spritesheet,random.randint(1,2),direction,2,75,player1,"soldier",100,200,-0.5)
-        soldiers.add(enemy_soldier) 
-
-    direction = random.getrandbits(1)
-    if direction == 1:
-        enemy_tank = enemy(random.randint(-1000,-250),random.randint(250,600),500,t_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200,-1)
+def pause_game(timer,events): #checks if the player presses space to pause and subsequently game is paused
+    if events["space"] == 1:
+        #pause the timer
+        timer.pause()
+        return "pause"
     else:
-        enemy_tank = enemy(random.randint(1000,2000),random.randint(250,600),500,t_spritesheet,random.randint(1,2),direction,2,75,player1,"tank",320,200,-1)
-    tanks.add(enemy_tank) 
+        return "play"
 
 
 def display_pause_menu(gd,score, high_score):
     gd.blit(pause_menu,(100,150))
     display_text(white,600,289,str(int(score)),arcade_font)
     display_text(white,600,385,str(int(high_score)),arcade_font)
+
+def resume(events,timer): #checks if the player has pressed "enter" when on the pause menu to resume playing
+    if events["enter"] == 1:
+        timer.resume()
+        return "play"   
+    else:
+        return "pause"
 
 
 def check_score(name,new_score,high_score):
@@ -238,23 +313,38 @@ def return_high_score(name):
             return(x["high_score"])     
 
 
-def increase_brightness(gd,counter):
-    #a surface is created and the game_over image is drawn over it
-    fade = pygame.Surface((1000,1000))
-    fade.blit(game_over,(0,0))
+def check_win(no_soldiers,first_soldier,player, gd):
+    global win_counter, win_sound,sound_playing, max_soldiers
+    #if there's no soldiers and no tanks
+    if no_soldiers == True and first_soldier.get_tanks_left() == 0:
+        win_counter += 1
+        #play game winning sound
+        if sound_playing == False:
+            win_sound.play()
+            sound_playing = True
+            return True, "play"
+        if win_counter>150 and win_counter<450:
+            #Fade the winning screen in
+            winning_fading(gd,win_counter)    
+            return True, "play"
+        if win_counter>=449:
+            #draw the winning image onto the screen
+            gd.blit(winning_image,(0,0)) 
+            #play the stamp sound
+            stamp.play()
+            win_counter = 0
+            sound_playing = False
+            max_soldiers = 5
+            no_soldiers = False
+            #change game state to win
+            return False,"win"
+        else:
+            return False, "play"
+    else:
+        return False, "play"
 
-    #changes the transparency of the fade surface to the counter parameter
-    fade.set_alpha(counter) 
-    #draws the surface "fade" onto the game display
-    gd.blit(fade,(0,0))
 
-
-def display_loss_screen(gd,score):
-    gd.blit(game_over,(0,0))
-    display_text(black,650,450,str(int(score)),pygame.font.Font("Stages/Stage 2/arcade_font.ttf", 65))
-
-
-def winning_fading(gd,counter):
+def winning_fading(gd,counter): #this function fades in the winning screen after player wins
     #create a fade surface
     fade = pygame.Surface((1000,1000))
     #draw the winning image onto the surface
@@ -278,6 +368,60 @@ def win_screen(gd,score,high_score,counter):
         display_text(black,580,511,str(int(score)),pygame.font.Font("Stages/Stage 2/arcade_font.ttf", 35))
 
 
+def check_loss(player,gd):
+    global alpha_counter,sound_playing, max_soldiers
+    if getattr(player,'health') <= 0:
+        #play game over sound
+        alpha_counter += 1
+        if sound_playing == False:
+            loss_sound.play()
+            sound_playing = True
+        if alpha_counter<255:
+            #increase the brightness of the screen until the display is fully visible
+            increase_brightness(gd,alpha_counter)
+        else: 
+            gd.blit(game_over,(0,0))
+            alpha_counter = 0
+            sound_playing = False
+            max_soldiers = 5
+            #change gamestate variable to "loss"
+            return "loss"
+    return "play"
+
+
+def increase_brightness(gd,counter):
+    #a surface is created and the game_over image is drawn over it
+    fade = pygame.Surface((1000,1000))
+    fade.blit(game_over,(0,0))
+
+    #changes the transparency of the fade surface to the counter parameter
+    fade.set_alpha(counter) 
+    #draws the surface "fade" onto the game display
+    gd.blit(fade,(0,0))
+
+
+def display_loss_screen(gd,score):
+    #game over screen and score of player displayed
+    gd.blit(game_over,(0,0))
+    display_text(black,650,450,str(int(score)),pygame.font.Font("Stages/Stage 2/arcade_font.ttf", 65))
+
+
+def play_again(events,player,timer,gun,grenade,soldiers,tanks,first_soldier,powerups,current_screen,win_screen_counter):
+    #listens to see whether the player presses space to play again. Reset_level() is called and Gamestate is changed to "menu"
+    if events["space"]:
+        reset_level(player,timer,gun,grenade,soldiers,tanks,first_soldier,powerups)
+        if current_screen == "loss":
+            return "menu"
+        if current_screen == "win":
+            return "menu", 0
+    #if player does not press space then I return the current game state
+    else:
+        if current_screen == "loss":
+            return "loss"
+        if current_screen == "win":
+            return "win", win_screen_counter
+
+
 def reset_level(player,timer,uzi,grenade,soldiers,tanks,first_soldier,powerup):
     #make the cursor visible 
     pygame.mouse.set_visible(True)
@@ -296,137 +440,4 @@ def reset_level(player,timer,uzi,grenade,soldiers,tanks,first_soldier,powerup):
     tanks.empty()
     soldiers.empty()
     #spawns the enemies again randomly 
-    spawn_initial_enemies(soldiers,tanks,player,soldier_spritesheet,tank_spritesheet)
-
-
-def display_game_graphics(gd,powerups,soldiers,tanks,first_soldier,events,gun,grenade,player):
-    gd.fill(white)
-    scroll_background(gd)
-    powerups.update(first_soldier.get_soldiers_left(),events["x"],events["y"],events["left-click"])
-    soldiers.update(gd)
-    tanks.update(gd)
-    player.health_bar(gd)
-    gun.display_icon(uzi,gd,750,800,775,925)
-    grenade.display_icon(grenade_image,gd,875,800,915,925)
-    show_soldiers(first_soldier.get_soldiers_left(),soldier_icon,50,800,gd)
-    show_tanks(first_soldier.get_tanks_left(),tank_icon,170,820,gd)
-    gun.shoot_effects(events["left-click"], black_cross,gd,events["x"],events["y"],events["x"] - 25,events["y"]-25,[soldiers,tanks])
-    grenade.shoot_effects(events["right-click"], grenade_visual, gd,events["x"],events["y"],events["x"] - 125,events["y"] - 125,[soldiers,tanks])
-    gun.draw_hitbox(gd,black,4,10)
-
-
-def start_timer(timer):
-    if getattr(timer,'started') == False:
-        timer.start()
-
-
-def pause_game(timer,events):
-    if events["space"] == 1:
-        #pause the timer
-        timer.pause()
-        return "pause"
-    else:
-        return "play"
-
-
-def max_soldiers_onscreen(given_first_soldier):
-    if given_first_soldier.get_soldiers_killed() >= 10 and given_first_soldier.get_soldiers_killed() <=29:
-        return 10 
-    if given_first_soldier.get_soldiers_killed() >= 30:
-        return given_first_soldier.get_soldiers_left() 
-    else:
-        return 5
-    
-
-def add_soldiers_to_screen(soldiers,max_soldiers,first_soldier,player):
-    if len(soldiers) < max_soldiers and first_soldier.get_soldiers_left() >=0:
-        direction = random.getrandbits(1)
-        if direction == 1:
-            enemy_soldier = enemy(random.randint(-1500,-150),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player,"soldier",100,200,-0.5)
-        else:
-            enemy_soldier = enemy(random.randint(1000,1500),random.randint(250,600),100,soldier_spritesheet,random.randint(1,2),direction,2,75,player,"soldier",100,200,-0.5)
-        soldiers.add(enemy_soldier)
-
-
-def add_tanks_to_screen(tanks,max_tanks,first_soldier,player):
-    if len(tanks) < max_tanks and first_soldier.get_tanks_left() !=0:  
-        direction = random.getrandbits(1)
-        #direction = 1
-        if direction == 1:
-            enemy_tank = enemy(random.randint(-1000,-250),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player,"tank",320,200,-1)
-        else:
-            enemy_tank = enemy(random.randint(1000,2000),random.randint(250,600),300,tank_spritesheet,random.randint(1,2),direction,2,75,player,"tank",320,200,-1)
-        tanks.add(enemy_tank) 
-
-
-def check_win(no_soldiers,first_soldier,player, gd, gamestate):
-    global win_counter, win_sound,sound_play, max_soldiers
-    if no_soldiers == True and first_soldier.get_tanks_left() == 0:
-        win_counter += 1
-        #play game winning sound
-        if sound_play == False:
-            win_sound.play()
-            sound_play = True
-            return True, "play"
-        if win_counter>150 and win_counter<450:
-            #Fade the winning screen in
-            winning_fading(gd,win_counter)    
-            return True, "play"
-        if win_counter>=449:
-            #draw the winning image onto the screen
-            gd.blit(winning_image,(0,0)) 
-            #play the stamp sound
-            stamp.play()
-            win_counter = 0
-            sound_play = False
-            max_soldiers = 5
-            no_soldiers = False
-            #change game state to win
-            return False,"win"
-        else:
-            return False, "play"
-    else:
-        return False, "play"
-
-
-def check_loss(player,gd):
-    if getattr(player,'health') <= 0:
-        #play game over sound
-        global alpha_counter,sound_play, max_soldiers
-        alpha_counter += 1
-        if sound_play == False:
-            loss_sound.play()
-            sound_play = True
-        if alpha_counter<255:
-            #increase the brightness of the screen until it is fully white
-            increase_brightness(gd,alpha_counter)
-        else: 
-            gd.blit(game_over,(0,0))
-            alpha_counter = 0
-            sound_play = False
-            #change gamestate variable to "loss"
-            max_soldiers = 5
-            return "loss"
-    return "play"
-
-
-def resume(events,timer):
-    if events["enter"] == 1:
-        timer.resume()
-        return "play"   
-    else:
-        return "pause"
-
-
-def play_again(events,player,timer,gun,grenade,soldiers,tanks,first_soldier,powerups,current_screen,win_screen_counter):
-    if events["space"]:
-        reset_level(player,timer,gun,grenade,soldiers,tanks,first_soldier,powerups)
-        if current_screen == "loss":
-            return "menu"
-        if current_screen == "win":
-            return "menu", 0
-    else:
-        if current_screen == "loss":
-            return "loss"
-        if current_screen == "win":
-            return "win", win_screen_counter
+    spawn_initial_enemies(player)
