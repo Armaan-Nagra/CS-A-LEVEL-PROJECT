@@ -136,7 +136,7 @@ def calculate_positions():
         }
 
     #returns "invalid" if there are less than 3 items of data.
-    if len(data["users"]) < 3:
+    if len(data["users"]) <= 3:
         return "invalid"
     
     #logic to check the order of scoring
@@ -151,7 +151,7 @@ def calculate_positions():
         elif x["high_score"] > third["high_score"]:
             third = x
 
-    #return the name and high_score in the right order as ditionary objects
+    #return the name and high_score in the right order as dictionary objects
     return first, second, third
 
 def display_leaderboard():
@@ -423,6 +423,7 @@ def play_again(events,player,timer,gun,grenade,soldiers,tanks,first_soldier,powe
 
 
 def reset_level(player,timer,uzi,grenade,soldiers,tanks,first_soldier,powerup):
+    global level_background
     #make the cursor visible 
     pygame.mouse.set_visible(True)
     #reset the powerups options
@@ -441,3 +442,5 @@ def reset_level(player,timer,uzi,grenade,soldiers,tanks,first_soldier,powerup):
     soldiers.empty()
     #spawns the enemies again randomly 
     spawn_initial_enemies(player)
+    level_background = random.choice([level_background1,level_background2])
+    play_music(background_music)

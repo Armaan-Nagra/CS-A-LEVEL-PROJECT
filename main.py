@@ -82,7 +82,7 @@ while gamestate != "end": # loops until the user wants to exit the game.
 
         #start the timer to check how long game takes to finish 
         start_timer(timer)
-        
+         
         #declares how many enemies are allowed at any one time on the screen
         max_soldiers = max_soldiers_onscreen(first_soldier)
 

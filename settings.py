@@ -1,4 +1,5 @@
 import pygame
+import random
 pygame.mixer.init()
 pygame.font.init()
 
@@ -38,7 +39,9 @@ grenade_sound = pygame.mixer.Sound("Stages/Stage 5/sounds/explosion.mp3")
 grenade_visual = pygame.image.load('Stages/Stage 5/photos/INGAME/explosion.png')
 
 #level scrolling background
-level_background = pygame.image.load('Stages/Stage 5/photos/test.png')
+level_background1 = pygame.image.load('Stages/Stage 5/photos/level_background_1.png')
+level_background2 = pygame.image.load('Stages/Stage 5/photos/level_background_2.png')
+level_background = random.choice([level_background1,level_background1])
 scroll_speed = 0.5
 scroll_background_x = 0
 
