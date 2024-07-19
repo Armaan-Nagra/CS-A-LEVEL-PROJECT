@@ -16,3 +16,42 @@ In order to save him, you need to eliminate 40 soldiers and 5 tanks using the we
 <img src="https://github.com/user-attachments/assets/cb915b46-9f18-408d-99b7-a2dd09e0a704" width="400">
 <img src="https://github.com/user-attachments/assets/4a53e7e9-5ff6-4f17-ad28-a59aec95ba4b" width="400">
 <img src="https://github.com/user-attachments/assets/f3fa234c-0b97-4735-a977-a76a04c648ad" width="400">
+
+## Installation
+Before you can install and play the game, you need to do the following (if not done already):
+
+1. Install Python, click [this](https://www.datacamp.com/blog/how-to-install-python) if you are not sure how.
+2. Install the Pygame library, click [this](https://www.pygame.org/wiki/GettingStarted) if you're not sure how.
+
+If you have completed the above steps, well done! 
+
+The next step is to download the game. You can either click on the big green button labelled "<> Code" and download the ZIP file or you can clone the repository, in most cases, it is recommended to clone the repository.
+
+If you're not sure how to clone a repository click [here](https://blog.hubspot.com/website/clone-github-repository) for a detailed walkthrough.
+
+Now, to play the game just simply run the "main.py" file by double clicking on it wherever you cloned the repository to.
+
+## License
+MIT License
+
+Copyright (c) 2024 Armaandeep Singh Nagra
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
