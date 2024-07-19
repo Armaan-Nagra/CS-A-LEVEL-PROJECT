@@ -13,3 +13,5 @@ In order to save him, you need to eliminate 40 soldiers and 5 tanks using the we
 <img src="https://github.com/user-attachments/assets/383e0f6e-2faa-43ee-be7a-aa13ad8717f9" width="300" height="300">
 <img src="https://github.com/user-attachments/assets/b7a6f7cf-ebab-4257-8bbc-d085bd3b2cad" width="300" height="300">
 <img src="https://github.com/user-attachments/assets/4b831c21-638e-4938-9e4f-40d22bf2a7b8" width="300" height="300">
+<img src="https://github.com/user-attachments/assets/cb915b46-9f18-408d-99b7-a2dd09e0a704" width="300" height="300">
+<img src="https://github.com/user-attachments/assets/4a53e7e9-5ff6-4f17-ad28-a59aec95ba4b" width="300" height="300">
