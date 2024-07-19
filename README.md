@@ -34,7 +34,7 @@ Now, to play the game just simply run the "main.py" file by double clicking on i
 ## License
 MIT License
 
-Copyright (c) 2024 Armaandeep Singh Nagra
+Copyright (c) 2024 Armaan Nagra
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
