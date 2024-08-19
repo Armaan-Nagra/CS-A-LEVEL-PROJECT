@@ -29,7 +29,9 @@ The next step is to download the game. You can either click on the big green but
 
 If you're not sure how to clone a repository click [here](https://blog.hubspot.com/website/clone-github-repository) for a detailed walkthrough.
 
-Now, to play the game just simply run the "main.py" file by double clicking on it wherever you cloned the repository to.
+Now, to play the game just simply run the "main.py" file by double clicking on it.
+
+Have fun!
 
 ## License
 MIT License
